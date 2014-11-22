@@ -26,7 +26,7 @@
 	</header>
 	
 	<nav class="menusup">
-		<form action="search" method="post" id="busqueda">
+		<form action="index.php?controller=friends&action=buscaramigos" method="post" id="busqueda">
 			<input id="botongris" type="submit" value="Buscar amigos">
 			<input id="cuadrobuscar" type="text" name="name_friend">		
 		</form>
@@ -66,21 +66,22 @@
 	
 	<div id="menuderecha">
 		<ul>
+			<!--
 			<li>
 				<div>
 					<a href="#"><img src="assets/img/mensajes.png" alt="Mensajes" height="60" width="70"></a>
 				</div>
 				<div class="letraderech">Mensajes</div>
-			</li>
+			</li>-->
 			<li>
 				<div>
-					<a href="#"><img src="assets/img/amigos.png" alt="Amigos" height="60" width="60"></a>
+					<a href="index.php?controller=friends&action=amigos"><img src="assets/img/amigos.png" alt="Amigos" height="60" width="60"></a>
 				</div>
 				<div class="letraderech">Amigos</div>
 			</li>
 			<li>
 				<div>
-					<a href="#"><img src="assets/img/solicitudes.png" alt="Solicitudes de amistad" height="60" width="60"></a>
+					<a href="index.php?controller=friends&action=solicitudes"><img src="assets/img/solicitudes.png" alt="Solicitudes de amistad" height="60" width="60"></a>
 				</div>
 				<div class="letraderech">Solicitudes Amistad</div>
 			</li>

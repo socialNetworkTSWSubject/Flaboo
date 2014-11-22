@@ -1,8 +1,10 @@
 <?php
-require_once(__DIR__."/../core/ViewManager.php");
-require_once(__DIR__."/../core/I18n.php");
+require_once(__DIR__."/../database/FriendDAO.php");
+require_once(__DIR__."/../model/Friend.php");
 require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../database/UserDAO.php");
+require_once(__DIR__."/../core/ViewManager.php");
+require_once(__DIR__."/../core/I18n.php");
 require_once(__DIR__."/../controller/BaseController.php");
 /**
  * Class UsersController
@@ -19,12 +21,12 @@ class FriendsController extends BaseController {
    * 
    * @var UserMapper
    */  
-  private $userDAO;    
+  private $friendDAO;    
   
   public function __construct() {    
     parent::__construct();
     
-    $this->userDAO = new UserDAO(); //FriendDAO??
+    $this->friendDAO = new FriendDAO(); 
     // Users controller operates in a "welcome" layout
     // different to the "default" layout where the internal
     // menu is displayed
@@ -32,17 +34,71 @@ class FriendsController extends BaseController {
   }
  
   public function amigos() { 
+  
+   if (!$_SESSION["currentuser"]) {
+      throw new Exception("inicia sesion en login");
+    }
+    
+    $currentuser = $_SESSION["currentuser"];
+    
+    // find the Post object in the database
+    $friends = $this->friendDAO->findFriends($currentuser);
+    
+    if ($friends == NULL) {
+      throw new Exception("No se encontro ningun amigo de: ".$currentuser->getName());
+    }
+    
+    // put the Post object to the view
+    $this->view->setVariable("friends", $friends);
+  
     $this->view->render("friends", "amigos");    
    
   }
   
+  
+  
    public function buscaramigos() { 
-    $this->view->render("friends", "buscaramigos");    
+   
+	   if (!$_SESSION["currentuser"]) {
+		  throw new Exception("inicia sesion en login");
+		}
+		
+		$currentuser = $_SESSION["currentuser"];
+		
+		// find the Post object in the database
+		$busquedas = $this->friendDAO->findUsuarios($currentuser);
+		
+		if ($busquedas == NULL) {
+		  throw new Exception("No hay usuarios");
+		}
+		
+		// put the Post object to the view
+		$this->view->setVariable("busquedas", $busquedas);
+	   
+		$this->view->render("friends", "buscaramigos");    
    
   }
   
    public function solicitudes() { 
-    $this->view->render("friends", "solicitudes");    
+   
+	   if (!$_SESSION["currentuser"]) {
+		  throw new Exception("inicia sesion en login");
+		}
+		
+		$currentuser = $_SESSION["currentuser"];
+		
+		// find the Post object in the database
+		$solicitudes = $this->friendDAO->findSolicitudes($currentuser);
+		
+		if ($solicitudes == NULL) {
+		  throw new Exception("No hay solicitudes para: ".$currentuser->getName());
+		}
+		
+		// put the Post object to the view
+		$this->view->setVariable("solicitudes", $solicitudes);
+   
+   
+		$this->view->render("friends", "solicitudes");    
    
   }
   

@@ -1,8 +1,10 @@
 ﻿<?php
+require_once(__DIR__."/../database/UserDAO.php"); //xke hace falta???????????
+require_once(__DIR__."/../model/User.php"); //xke hace falta???????????
+require_once(__DIR__."/../database/PostDAO.php");
 require_once(__DIR__."/../model/Post.php");
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
-require_once(__DIR__."/../database/PostDAO.php");
 require_once(__DIR__."/../controller/BaseController.php");
 /**
  * Class UsersController
