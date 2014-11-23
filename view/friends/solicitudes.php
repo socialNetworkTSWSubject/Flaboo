@@ -16,7 +16,7 @@
 		<h2 class="nombresolicitud" ><?=$solicitud->getName()?></h2>
 		<div class="botonessolicitud">
 			<a href="index.php?controller=friends&action=aceptarAmistad&id=<?=$solicitud->getEmail()?>" ><button class="botonsolicitud">Aceptar</button></a>
-			<button href="index.php?controller=friends&action=rechazarAmistad" class="botonsolicitud">Rechazar</button>
+			<a href="index.php?controller=friends&action=rechazarAmistad&id=<?=$solicitud->getEmail()?>" ><button class="botonsolicitud">Rechazar</button></a>
 		</div>
 	</div>
 <?php endforeach; ?>

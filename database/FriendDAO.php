@@ -41,6 +41,10 @@ class FriendDAO {
     $stmt->execute(array($friendship->getUserEmail(), $friendship->getFriendEmail()));  
   }
   
+  public function deleteFriendship($friendship){
+	$stmt = $this->db->prepare("DELETE from friends WHERE userEmail=? and friendEmail=?");
+    $stmt->execute(array($friendship->getUserEmail(),$friendship->getFriendEmail()));  
+  }
   
   
    /**
@@ -71,6 +75,24 @@ class FriendDAO {
   public function findFriendship($currentuser, $friendEmail){
  
 	$stmt = $this->db->prepare("SELECT * FROM friends WHERE userEmail=? and friendEmail=?");
+    $stmt->execute(array($friendEmail,$currentuser->getEmail()));
+	
+	$friendship = $stmt->fetch(PDO::FETCH_ASSOC);
+	
+	if(!sizeof($friendship) == 0) {
+		return new Friend(
+			$friendship["userEmail"],
+			$friendship["friendEmail"],
+			$friendship["isFriend"]
+		);
+    } else {
+		return NULL;
+    } 
+  }
+  
+  public function findFriendship2($currentuser, $friendEmail){
+ 
+	$stmt = $this->db->prepare("SELECT * FROM friends WHERE userEmail=? and friendEmail=?");
     $stmt->execute(array($currentuser->getEmail(),$friendEmail));
 	
 	$friendship = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -81,10 +103,7 @@ class FriendDAO {
 			$friendship["friendEmail"],
 			$friendship["isFriend"]
 		);
-		
-	
     } else {
-	
 		return NULL;
     } 
   }
@@ -102,7 +121,7 @@ class FriendDAO {
   public function findUsuarios($currentuser){ ///revisar????????????????????????????????????????''
   
     $stmt = $this->db->prepare("SELECT * FROM friends, users WHERE (friends.userEmail=? and users.email!=friends.friendEmail) or (friends.friendEmail=? and users.email!=friends.userEmail)");//como poner el true solo va con 1 con true no?????????????????
-    $stmt->execute(array($currentuser->getEmail()));
+    $stmt->execute(array($currentuser->getEmail(),$currentuser->getEmail()));
     //$user = $stmt->fetch(PDO::FETCH_ASSOC);
 	$friends_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
@@ -117,7 +136,12 @@ class FriendDAO {
   }
   
   
+  public function saveFriedship($currentuser, $friendEmail){ 
   
+	$stmt = $this->db->prepare("INSERT INTO friends(userEmail, friendEmail, isFriend) values (?,?,0)");
+    $stmt->execute(array($currentuser->getEmail(), $friendEmail)); 
+  
+  }
   
   
   /**

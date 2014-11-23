@@ -13,7 +13,7 @@
 		<img  class="usercomentario" src="assets/img/userb.jpg" alt="LogOut" height="50" width="50">
 		<h2 class="nombresolicitud" ><?=$friend->getName()?></h2>
 		<div class="botonessolicitud">
-			<button class="botonsolicitud">Eliminar de amigos</button>
+			<a href="index.php?controller=friends&action=eliminarAmigo&id=<?=$friend->getEmail()?>"><button class="botonsolicitud">Eliminar de amigos</button></a>
 		</div>
 	</div>
 <?php endforeach; ?>
