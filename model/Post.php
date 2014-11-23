@@ -45,6 +45,11 @@ class Post
 	 */
 	private $author;
 	
+	/**
+	 * likes del post
+	 * @var mixed
+	 */
+	private $likes;
 	
 	/**
 	 * Constructor del post
@@ -53,13 +58,15 @@ class Post
 	 * @param string $content El contenido del post
 	 * @param int $numLikes El numero de likes del post
 	 * @param string $author El autor del post
+	 * @param mixed $likes Los likes del post
 	 */
-	public function __construct($idPost, $date, $content, $numLikes, $author){
+	public function __construct($idPost, $date, $content, $numLikes, $author, $likes){
 		$this->idPost = $idPost;
 		$this->date = $date;
 		$this->content = $content;
 		$this->numLikes = $numLikes;
 		$this->author = $author;
+		$this->likes = $likes;
 	}
 	
 	/**
@@ -109,6 +116,15 @@ class Post
 	public function setNumLikes($numLikes){
 		$this->numLikes = $numLikes;
 	}
+	
+	/**
+	 * Enlaza los likes en el post
+	 * @param array $likes
+	 */
+	public function setLikes(array $likes){
+		$this->likes = $likes;
+	}
+	
 	
 	/**
 	 * Comprueba si la instancia del post es valida para ser almacenada

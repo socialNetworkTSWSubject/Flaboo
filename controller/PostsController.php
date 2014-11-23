@@ -1,10 +1,8 @@
 ﻿<?php
-require_once(__DIR__."/../database/UserDAO.php"); //xke hace falta???????????
-require_once(__DIR__."/../model/User.php"); //xke hace falta???????????
-require_once(__DIR__."/../database/PostDAO.php");
 require_once(__DIR__."/../model/Post.php");
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
+require_once(__DIR__."/../database/PostDAO.php");
 require_once(__DIR__."/../controller/BaseController.php");
 /**
  * Class UsersController
@@ -29,12 +27,12 @@ class PostsController extends BaseController {
     $this->postDAO = new PostDAO(); 
   }
   /*
-  public function posts() {
+  public function viewPost() {
   	if (!isset($this->currentUser)) {
   		throw new Exception("Not in session. Editing posts requires login");
   	}
 
-  	$post = $this->postDAO->findByIdUser($this->currentUser);
+  	$post = $this->postDAO->findByAuthor($this->currentUser->getEmail());
   	
   	if ($post == NULL) {
   		throw new Exception("no such post with id: ".$postid);
@@ -42,7 +40,8 @@ class PostsController extends BaseController {
   	
   	$this->view->setVariable("post", $post);
   	$this->view->render("posts","inicio");
-  	
+  	$this->view->setLayout("default");
+	echo "Prueba";
   }
   
   
@@ -93,8 +92,8 @@ class PostsController extends BaseController {
   	
   	
   }
-  */
   
+  */
  //ADRI DEJA ESTE METODO TAL COMO ESTA PARA QUE PUEDA SEGUIR HACIENDO PRUEBAS CON EL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   public function posts() { 
   	$this->view->render("posts", "inicio");    
