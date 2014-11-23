@@ -77,7 +77,8 @@ class PostDAO {
 				
 				FROM post P LEFT OUTER JOIN likes L 
 				ON P.idPost = L.likePost 
-				WHERE P.idPost = ?");
+				WHERE P.idPost = ?
+				ORDER BY P.datePost");
 		
 		$stmt->execute(array($idPost));
 		$post_with_likes = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -112,7 +113,8 @@ class PostDAO {
 	
 				FROM post P LEFT OUTER JOIN likes L
 				ON P.idPost = L.likePost
-				WHERE P.author = ?");
+				WHERE P.author = ?
+				ORDER BY P.datePost");
 	
 		$stmt->execute(array($idPost));
 		$post_with_likes = $stmt->fetchAll(PDO::FETCH_ASSOC);

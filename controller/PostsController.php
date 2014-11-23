@@ -1,5 +1,6 @@
 ﻿<?php
 require_once(__DIR__."/../database/PostDAO.php");
+require_once(__DIR__."/../database/FriendsDAO.php");
 require_once(__DIR__."/../model/Post.php");
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
@@ -14,25 +15,36 @@ require_once(__DIR__."/../controller/BaseController.php");
 class PostsController extends BaseController {
   
   /**
-   * Reference to the UserDAO to interact
-   * with the database
+   * Reference to the PostDAO to interact with the database
    * 
-   * @var UserMapper
+   * @var PostDAO
    */  
-  private $postDAO;    
+  private $postDAO; 
+  
+  /**
+   * Reference to the FriendDAO to interact with the database
+   * 
+   * @var FriendDAO
+   */
+  private $friendDAO;
   
   public function __construct() {    
     parent::__construct();
     
-    $this->postDAO = new PostDAO(); 
+    $this->postDAO = new PostDAO();
+    $this->friendDAO = New FriendDAO(); 
   }
   
   public function viewPost() {
   	if (!isset($this->currentUser)) {
   		throw new Exception("Not in session. Editing posts requires login");
   	}
-
-  	$post = $this->postDAO->findByAuthor($this->currentUser->getEmail());
+	//Array que contiene el email del usuario y sus amigos
+	$array_email = array();
+	array_push($array_email, $this->currentUser->getEmail());
+  	array_push($array_email, $this->friendDAO->findFriends($this->currentUser->getEmail()));
+  	
+  	$post = $this->postDAO->findByAuthor($array_email);
   	
   	if ($post == NULL) {
   		throw new Exception("no such post with id: ".$postid);
@@ -40,8 +52,6 @@ class PostsController extends BaseController {
   	
   	$this->view->setVariable("post", $post);
   	$this->view->render("posts","inicio");
-  	$this->view->setLayout("default");
-	echo "Prueba";
   }
   
   
@@ -63,7 +73,7 @@ class PostsController extends BaseController {
   		$post->checkIsValidForCreate();
   		
   		//Guarda el post en la base de datos
-  		$post->postDAO->save();
+  		$this->postDAO->save($post);
   		
   		// POST-REDIRECT-GET
   		// Everything OK, we will redirect the user to the list of posts
@@ -81,8 +91,6 @@ class PostsController extends BaseController {
     }
   	
     $this->view->setVariable("post", $post);
-    
-    // render the view (/view/posts/add.php)
     $this->view->render("posts", "inicio");
     
   	

@@ -56,7 +56,7 @@ class LikesController extends BaseController{
 			$like = new Like($this->currentUser->getEmail(),$post);
 			
 			try {
-				$this->likeDAO->addLike($like);
+				$this->likeDAO->addLikePost($like);
 				$this->view->redirect("posts", "viewPost", "id=".$post->getIdPost());
 			} catch (ValidationException $ex){
 				$errors = $ex->getErrors();
