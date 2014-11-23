@@ -32,13 +32,41 @@ class FriendsController extends BaseController {
     // menu is displayed
     //   
   }
+  
+   public function aceptarAmistad() { 
+   
+		$currentuser = $_SESSION["currentuser"];
+		
+		if (isset($_GET["id"])){
+
+			$friendEmail=$_GET["id"];
+			
+			$friendship = $this->friendDAO->findFriendship($currentuser, $friendEmail);
+			
+			if ($friendship == NULL) {
+			  throw new Exception("no hay ninguna relacion entre esos usuarios: ");
+			}
+			
+			// find the Post object in the database
+			$this->friendDAO->updateIsFriend($friendship);
+			//redirige al metodo solicitudes del controlador friends
+			//$this->view->redirect("friends", "solicitudes");
+			 
+		}
+		//cambia el titulo de la pagina por ---login---
+		$this->view->setVariable("title", "---- solicitudes----");
+		
+		// render the view (/view/users/login.php)
+		$this->view->render("friends", "solicitudes");   
+   
+   }
+  
+   public function rechazarAmistad() { 
+   }
+  
  
   public function amigos() { 
   
-   if (!$_SESSION["currentuser"]) {
-      throw new Exception("inicia sesion en login");
-    }
-    
     $currentuser = $_SESSION["currentuser"];
     
     // find the Post object in the database
@@ -59,10 +87,6 @@ class FriendsController extends BaseController {
   
    public function buscaramigos() { 
    
-	   if (!$_SESSION["currentuser"]) {
-		  throw new Exception("inicia sesion en login");
-		}
-		
 		$currentuser = $_SESSION["currentuser"];
 		
 		// find the Post object in the database
@@ -81,10 +105,6 @@ class FriendsController extends BaseController {
   
    public function solicitudes() { 
    
-	   if (!$_SESSION["currentuser"]) {
-		  throw new Exception("inicia sesion en login");
-		}
-		
 		$currentuser = $_SESSION["currentuser"];
 		
 		// find the Post object in the database

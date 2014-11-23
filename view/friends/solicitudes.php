@@ -15,8 +15,8 @@
 		<img  class="usercomentario" src="assets/img/userb.jpg" alt="LogOut" height="50" width="50">
 		<h2 class="nombresolicitud" ><?=$solicitud->getName()?></h2>
 		<div class="botonessolicitud">
-			<button class="botonsolicitud">Aceptar</button>
-			<button class="botonsolicitud">Rechazar</button>
+			<a href="index.php?controller=friends&action=aceptarAmistad&id=<?=$solicitud->getEmail()?>" ><button class="botonsolicitud">Aceptar</button></a>
+			<button href="index.php?controller=friends&action=rechazarAmistad" class="botonsolicitud">Rechazar</button>
 		</div>
 	</div>
 <?php endforeach; ?>

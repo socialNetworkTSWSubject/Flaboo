@@ -36,6 +36,12 @@ class FriendDAO {
     $stmt->execute(array($friend->getUserEmail(), $friend->getFriendEmail(), $friend->getIsFriend()));  
   }
   
+  public function updateIsFriend($friendship){
+	$stmt = $this->db->prepare("UPDATE friends set isFriend=1 where userEmail=? and friendEmail=?");
+    $stmt->execute(array($friendship->getUserEmail(), $friendship->getFriendEmail()));  
+  }
+  
+  
   
    /**
    * Loads a Post from the database given its id
@@ -47,7 +53,7 @@ class FriendDAO {
    * if the Post is not found
    */    
   public function findFriends($currentuser){ ///revisar????????????????????????????????????????''
-    $stmt = $this->db->prepare("SELECT * FROM friends, users WHERE friends.useremail=? and users.email=friends.friendEmail and friends.isFriend='1'");//como poner el true solo va con 1 con true no?????????????????
+    $stmt = $this->db->prepare("SELECT * FROM friends, users WHERE friends.userEmail=? and users.email=friends.friendEmail and friends.isFriend='1'");//como poner el true solo va con 1 con true no?????????????????
     $stmt->execute(array($currentuser->getEmail()));
     //$user = $stmt->fetch(PDO::FETCH_ASSOC);
 	$friends_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -60,6 +66,27 @@ class FriendDAO {
 	
     return $friends;
      
+  }
+  
+  public function findFriendship($currentuser, $friendEmail){
+ 
+	$stmt = $this->db->prepare("SELECT * FROM friends WHERE userEmail=? and friendEmail=?");
+    $stmt->execute(array($currentuser->getEmail(),$friendEmail));
+	
+	$friendship = $stmt->fetch(PDO::FETCH_ASSOC);
+	
+	if(!sizeof($friendship) == 0) {
+		return new Friend(
+			$friendship["userEmail"],
+			$friendship["friendEmail"],
+			$friendship["isFriend"]
+		);
+		
+	
+    } else {
+	
+		return NULL;
+    } 
   }
   
   
