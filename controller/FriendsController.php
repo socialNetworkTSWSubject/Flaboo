@@ -50,7 +50,7 @@ class FriendsController extends BaseController {
 			// find the Post object in the database
 			$this->friendDAO->updateIsFriend($friendship);
 			//redirige al metodo solicitudes del controlador friends
-			//$this->view->redirect("friends", "solicitudes");
+			$this->view->redirect("friends", "solicitudes");
 			 
 		}
 		//cambia el titulo de la pagina por ---login---
@@ -62,6 +62,90 @@ class FriendsController extends BaseController {
    }
   
    public function rechazarAmistad() { 
+	
+		$currentuser = $_SESSION["currentuser"];
+		
+		if (isset($_GET["id"])){
+
+			$friendEmail=$_GET["id"];
+			
+			$friendship = $this->friendDAO->findFriendship($currentuser, $friendEmail);
+			
+			if ($friendship == NULL) {
+			  throw new Exception("no hay ninguna relacion entre esos usuarios: ");
+			}
+			
+			// find the Post object in the database
+			$this->friendDAO->deleteFriendship($friendship);
+			//redirige al metodo solicitudes del controlador friends
+			$this->view->redirect("friends", "solicitudes");
+			 
+		}
+		//cambia el titulo de la pagina por ---login---
+		$this->view->setVariable("title", "---- solicitudes----");
+		
+		// render the view (/view/users/login.php)
+		$this->view->render("friends", "solicitudes");  
+   
+   }
+   
+   
+    public function solicitarAmistad() { 
+	
+		$currentuser = $_SESSION["currentuser"];
+		
+		if (isset($_GET["id"])){
+
+			$friendEmail=$_GET["id"];
+			
+			$this->friendDAO->saveFriedship($currentuser, $friendEmail);
+			
+			//redirige al metodo solicitudes del controlador friends
+			$this->view->redirect("friends", "buscaramigos");
+			 
+		}
+		//cambia el titulo de la pagina por ---login---
+		$this->view->setVariable("title", "---- Buscar Amigos----");
+		
+		// render the view (/view/users/login.php)
+		$this->view->render("friends", "buscaramigos");  
+   
+   }
+   
+   
+   public function eliminarAmigo(){
+   
+		$currentuser = $_SESSION["currentuser"];
+		
+		if (isset($_GET["id"])){
+
+			$friendEmail=$_GET["id"];
+			
+			$friendship = $this->friendDAO->findFriendship($currentuser, $friendEmail);
+			$friendship2 = $this->friendDAO->findFriendship2($currentuser, $friendEmail);
+			
+			if ($friendship == NULL and $friendship2 == NULL) {
+			  throw new Exception("no hay ninguna relacion entre esos usuarios: ");
+			}
+			if (!$friendship == NULL) {
+			  $this->friendDAO->deleteFriendship($friendship);
+			}
+			if (!$friendship2 == NULL) {
+			  $this->friendDAO->deleteFriendship($friendship2);
+			}
+			
+			
+			// find the Post object in the database
+			
+			//redirige al metodo solicitudes del controlador friends
+			$this->view->redirect("friends", "amigos");
+			 
+		}
+		//cambia el titulo de la pagina por ---login---
+		$this->view->setVariable("title", "---- amigos----");
+		
+		// render the view (/view/users/login.php)
+		$this->view->render("friends", "amigos");  
    }
   
  

@@ -58,6 +58,10 @@ INSERT INTO `USERS` (`email`, `password`, `name`) VALUES
 ('ramon@gmail.com', 'ramon', 'ramon lopez gomez'),
 ('llperez@gmail.com', 'laura', 'laura lorenzo perez'),
 ('martin@gmail.com', 'martin', 'martin casares perez'),
+('oscar@gmail.com', 'oscar', 'oscar sanchez valencia'),
+('julian@gmail.com', 'julian', 'julian lopez gomez'),
+('victor@gmail.com', 'victor', 'victor lorenzo perez'),
+('carmen@gmail.com', 'carmen', 'carmen casares perez'),
 ('marta@gmail.com', 'marta', 'marta perez perez');
 
 INSERT INTO `POST` (`idPost`, `datePost`, `content`, `numLikes`,`author`) VALUES
@@ -78,6 +82,10 @@ INSERT INTO `FRIENDS` (`userEmail`, `friendEmail`, `isFriend`) VALUES
 ('carlos@gmail.com','adri@gmail.com',false),
 ('ramon@gmail.com','adri@gmail.com',false),
 ('luis@gmail.com','adri@gmail.com',false),
+('oscar@gmail.com','adri@gmail.com',false),
+('julian@gmail.com','adri@gmail.com',false),
+('victor@gmail.com','adri@gmail.com',false),
+('carmen@gmail.com','adri@gmail.com',false),
 
 ('adri@gmail.com','marta@gmail.com',false);
 
