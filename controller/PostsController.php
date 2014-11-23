@@ -26,7 +26,7 @@ class PostsController extends BaseController {
     
     $this->postDAO = new PostDAO(); 
   }
-  /*
+  
   public function viewPost() {
   	if (!isset($this->currentUser)) {
   		throw new Exception("Not in session. Editing posts requires login");
@@ -93,10 +93,10 @@ class PostsController extends BaseController {
   	
   }
   
-  */
+  /*
  //ADRI DEJA ESTE METODO TAL COMO ESTA PARA QUE PUEDA SEGUIR HACIENDO PRUEBAS CON EL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   public function posts() { 
   	$this->view->render("posts", "inicio");    
   }
-  
+  */
 }
