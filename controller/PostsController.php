@@ -1,6 +1,6 @@
 ﻿<?php
 require_once(__DIR__."/../database/PostDAO.php");
-require_once(__DIR__."/../database/FriendsDAO.php");
+require_once(__DIR__."/../database/FriendDAO.php");
 require_once(__DIR__."/../model/Post.php");
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
@@ -35,7 +35,7 @@ class PostsController extends BaseController {
     $this->friendDAO = New FriendDAO(); 
   }
   
-  public function viewPost() {
+  public function viewPosts() {
   	if (!isset($this->currentUser)) {
   		throw new Exception("Not in session. Editing posts requires login");
   	}
@@ -47,7 +47,7 @@ class PostsController extends BaseController {
   	$post = $this->postDAO->findByAuthor($array_email);
   	
   	if ($post == NULL) {
-  		throw new Exception("no such post with id: ".$postid);
+  		throw new Exception("no such post");
   	}
   	
   	$this->view->setVariable("post", $post);
@@ -101,10 +101,10 @@ class PostsController extends BaseController {
   	
   }
   
-  
+  /*
  //ADRI DEJA ESTE METODO TAL COMO ESTA PARA QUE PUEDA SEGUIR HACIENDO PRUEBAS CON EL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   public function posts() { 
   	$this->view->render("posts", "inicio");    
   }
-  
+  */
 }

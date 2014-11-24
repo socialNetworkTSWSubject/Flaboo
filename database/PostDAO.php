@@ -72,8 +72,8 @@ class PostDAO {
 				P.content as 'post.content',
 				P.numLikes as 'post.numLikes',
 				P.author as 'post.author',
-				L.authorLike as like.author,
-				L.likePost as like.idLike
+				L.authorLike as 'like.author',
+				L.likePost as 'like.idLike'
 				
 				FROM post P LEFT OUTER JOIN likes L 
 				ON P.idPost = L.likePost 
@@ -101,22 +101,22 @@ class PostDAO {
 	 * @param string $idAuthor
 	 * @return Post Las instancias de post|NULL en caso de no existir post
 	 */
-	public function findByAuthor($author){
+	public function findByAuthor(array $author){
 		$stmt = $this->db->prepare("SELECT
 				P.idPost as 'post.id',
 				P.datePost as 'post.date',
 				P.content as 'post.content',
 				P.numLikes as 'post.numLikes',
 				P.author as 'post.author',
-				L.authorLike as like.author,
-				L.likePost as like.idLike
+				L.authorLike as 'like.author',
+				L.likePost as 'like.idLike'
 	
 				FROM post P LEFT OUTER JOIN likes L
 				ON P.idPost = L.likePost
 				WHERE P.author = ?
 				ORDER BY P.datePost");
 	
-		$stmt->execute(array($idPost));
+		$stmt->execute(array($author));
 		$post_with_likes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
 		if(sizeof($post_with_likes)>0){
