@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once(__DIR__."/../database/PostDAO.php");
 require_once(__DIR__."/../database/FriendDAO.php");
 require_once(__DIR__."/../model/Post.php");
@@ -101,10 +101,10 @@ class PostsController extends BaseController {
   	
   }
   
-  /*
+  
  //ADRI DEJA ESTE METODO TAL COMO ESTA PARA QUE PUEDA SEGUIR HACIENDO PRUEBAS CON EL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   public function posts() { 
   	$this->view->render("posts", "inicio");    
   }
-  */
+ 
 }

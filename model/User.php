@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // file: model/User.php
 
 require_once(__DIR__."/../core/ValidationException.php");

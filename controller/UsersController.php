@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once(__DIR__."/../database/UserDAO.php");
 require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../core/ViewManager.php");
@@ -66,7 +66,7 @@ class UsersController extends BaseController {
 		$_SESSION["currentuser"]=$user;
 		
 		// Envia al usuario al metodo posts del PostsController. (aora lo ke hace ese metodo es mandar al usuario a inicio.php/ adri lo tiene que cambiar)
-		$this->view->redirect("posts", "viewPosts");
+		$this->view->redirect("posts", "posts");
 	
       }else{
 		$errors = array();

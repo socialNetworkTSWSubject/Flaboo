@@ -3,9 +3,9 @@
 /**
  * Class ValidationException
  * 
- * Incluye un array de errores para la validaci髇 de datos.
+ * Incluye un array de errores para la validaci贸n de datos.
  *
- * El array de errores contiene validaci髇 de errores.
+ * El array de errores contiene validaci贸n de errores.
  * 
  * @author jenifer <jeny-093@hotmail.com>
  * @author adrian <adricelixfernandez@gmail.com>
@@ -24,9 +24,9 @@ class ValidationException extends Exception {
   }
   
   /**
-   * Devuelve la validaci髇 de errores
+   * Devuelve la validaci贸n de errores
    * 
-   * @return mixed La validaci髇 de errores
+   * @return mixed La validaci贸n de errores
    */
   public function getErrors() {
     return $this->errors;

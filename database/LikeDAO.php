@@ -14,7 +14,7 @@ require_once(__DIR__."/../core/PDOConnection.php");
 class LikeDAO {
 	
 	/**
-	 * Referencia a la conexión PDO
+	 * Referencia a la conexiÃ³n PDO
 	 * @var PDO
 	 */
 	private $db;

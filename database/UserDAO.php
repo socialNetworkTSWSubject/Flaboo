@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // file: database/UserDAO.php
 
 require_once(__DIR__."/../core/PDOConnection.php");

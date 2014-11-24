@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // file: database/UserDAO.php
 
 require_once(__DIR__."/../core/PDOConnection.php");
@@ -120,8 +120,8 @@ class FriendDAO {
    */    
   public function findUsuarios($currentuser){ ///revisar????????????????????????????????????????''
   
-    $stmt = $this->db->prepare("SELECT * FROM friends, users WHERE (friends.userEmail=? and users.email!=friends.friendEmail) or (friends.friendEmail=? and users.email!=friends.userEmail)");//como poner el true solo va con 1 con true no?????????????????
-    $stmt->execute(array($currentuser->getEmail(),$currentuser->getEmail()));
+    $stmt = $this->db->prepare("SELECT * FROM users u WHERE not exists(select * from friends where (friends.userEmail=? and u.email=friends.friendEmail) or (friends.friendEmail=? and u.email=friends.userEmail)) and u.email!=?");//como poner el true solo va con 1 con true no?????????????????
+    $stmt->execute(array($currentuser->getEmail(),$currentuser->getEmail(), $currentuser->getEmail()));
     //$user = $stmt->fetch(PDO::FETCH_ASSOC);
 	$friends_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	

@@ -18,7 +18,7 @@ require_once(__DIR__."/../model/Like.php");
 class PostDAO {
 	
 	/**
-	 * Referencia a la conexión PDO
+	 * Referencia a la conexiÃ³n PDO
 	 * @var PDO
 	 */
 	private $db;

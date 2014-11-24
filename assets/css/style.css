@@ -1,4 +1,3 @@
-
 @font-face {
   font-family: "bod-blar";
   src: url("../fuentes/BOD_BLAR.woff")
@@ -155,6 +154,53 @@ footer{
 
 .clearboth {
 	clear: both;
+}
+
+.solicitud{
+	margin-left:10px;
+	margin-top:10px;
+	display: inline-block;
+}
+
+.txtsolicitudes{
+	margin-bottom:20px;
+	text-decoration: underline;
+	color:#265B91;
+}
+
+.nombresolicitud{
+	font-size: 15px;
+	margin-top: 20px;
+	margin-bottom: 5px;
+	color:#265B91;
+	float:left;
+	-webkit-text-stroke: 0.3px black;
+}
+
+.botonessolicitud{
+	margin-top: 17px;
+	margin-left: 15px;
+	float:left;
+}
+
+.botonsolicitud{
+
+	text-align: center;
+    padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+    font-size: 13px;
+	margin-top:1px;
+	margin-left:5px;
+	margin-right:5px;
+    font-weight: bold;
+	box-shadow: 0px 0px 8px #000000;
+	border-radius:5px;
+	background-color:#afc6e9;
+	float:left;
+	border-color:#5f8dd3;
+	border:3px outset  #5f8dd3;
 }
 
 .comentario {

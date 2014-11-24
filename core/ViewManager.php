@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // file: /core/ViewManager.php
 /**
  * Class ViewManager
