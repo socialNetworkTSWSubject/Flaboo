@@ -60,7 +60,7 @@ class Post
 	 * @param string $author El autor del post
 	 * @param mixed $likes Los likes del post
 	 */
-	public function __construct($idPost, $date, $content, $numLikes, $author, $likes){
+	public function __construct($idPost=NULL, $date=NULL, $content=NULL, $numLikes=NULL, $author=NULL, $likes=NULL){
 		$this->idPost = $idPost;
 		$this->date = $date;
 		$this->content = $content;

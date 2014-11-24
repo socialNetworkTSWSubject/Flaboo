@@ -43,7 +43,7 @@ class PostsController extends BaseController {
 	$array_email = array();
 	array_push($array_email, $this->currentUser->getEmail());
   	array_push($array_email, $this->friendDAO->findFriends($this->currentUser->getEmail()));
-  	
+	
   	$post = $this->postDAO->findByAuthor($array_email);
   	
   	if ($post == NULL) {

@@ -101,7 +101,7 @@ class PostDAO {
 	 * @param string $idAuthor
 	 * @return Post Las instancias de post|NULL en caso de no existir post
 	 */
-	public function findByAuthor(array $author){
+	public function findByAuthor($author){
 		$stmt = $this->db->prepare("SELECT
 				P.idPost as 'post.id',
 				P.datePost as 'post.date',
@@ -116,12 +116,12 @@ class PostDAO {
 				WHERE P.author = ?
 				ORDER BY P.datePost");
 	
-		$stmt->execute(array($author));
+		$stmt->execute(array($author[0]->getEmail()));
 		$post_with_likes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
 		if(sizeof($post_with_likes)>0){
-			$post = new Post($post[0]["post.id"], $post[0]["post.date"], $post[0]["post.content"],
-					$post[0]["post.numLikes"], $post[0]["post.author"]);
+			$post = new Post($post_with_likes[0]["post.id"], $post_with_likes[0]["post.date"], $post_with_likes[0]["post.content"],
+					$post_with_likes[0]["post.numLikes"], $post_with_likes[0]["post.author"]);
 			$likes_array = array();
 			foreach ($post_with_likes as $like){
 				$like = new Like(new User($like["like.author"]), $post);
