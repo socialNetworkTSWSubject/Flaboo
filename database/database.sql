@@ -75,10 +75,6 @@ INSERT INTO `FRIENDS` (`userEmail`, `friendEmail`, `isFriend`) VALUES
 ('adri@gmail.com','tggomez@gmail.com',true),
 ('adri@gmail.com','llperez@gmail.com',true),
 
-('jeni@gmail.com','adri@gmail.com',true),
-('tggomez@gmail.com','adri@gmail.com',true),
-('llperez@gmail.com','adri@gmail.com',true),
-
 ('carlos@gmail.com','adri@gmail.com',false),
 ('ramon@gmail.com','adri@gmail.com',false),
 ('luis@gmail.com','adri@gmail.com',false),

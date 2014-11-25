@@ -33,7 +33,7 @@ class FriendsController extends BaseController {
     //   
   }
   
-   public function aceptarAmistad() { 
+   public function aceptarAmistad() { //TERMINADO
    
 		$currentuser = $_SESSION["currentuser"];
 		
@@ -41,7 +41,7 @@ class FriendsController extends BaseController {
 
 			$friendEmail=$_GET["id"];
 			
-			$friendship = $this->friendDAO->findFriendship($currentuser, $friendEmail);
+			$friendship = $this->friendDAO->findPeticion($currentuser, $friendEmail);
 			
 			if ($friendship == NULL) {
 			  throw new Exception("no hay ninguna relacion entre esos usuarios: ");
@@ -61,7 +61,7 @@ class FriendsController extends BaseController {
    
    }
   
-   public function rechazarAmistad() { 
+   public function rechazarAmistad() { //TERMINADO
 	
 		$currentuser = $_SESSION["currentuser"];
 		
@@ -69,7 +69,7 @@ class FriendsController extends BaseController {
 
 			$friendEmail=$_GET["id"];
 			
-			$friendship = $this->friendDAO->findFriendship($currentuser, $friendEmail);
+			$friendship = $this->friendDAO->findPeticion($currentuser, $friendEmail);
 			
 			if ($friendship == NULL) {
 			  throw new Exception("no hay ninguna relacion entre esos usuarios: ");
@@ -90,7 +90,7 @@ class FriendsController extends BaseController {
    }
    
    
-    public function solicitarAmistad() { 
+    public function solicitarAmistad() { //TERMINADO
 	
 		$currentuser = $_SESSION["currentuser"];
 		
@@ -122,7 +122,6 @@ class FriendsController extends BaseController {
 			$friendEmail=$_GET["id"];
 			
 			$friendship = $this->friendDAO->findFriendship($currentuser, $friendEmail);
-			$friendship2 = $this->friendDAO->findFriendship2($currentuser, $friendEmail);
 			
 			if ($friendship == NULL and $friendship2 == NULL) {
 			  throw new Exception("no hay ninguna relacion entre esos usuarios: ");
@@ -130,10 +129,6 @@ class FriendsController extends BaseController {
 			if (!$friendship == NULL) {
 			  $this->friendDAO->deleteFriendship($friendship);
 			}
-			if (!$friendship2 == NULL) {
-			  $this->friendDAO->deleteFriendship($friendship2);
-			}
-			
 			
 			// find the Post object in the database
 			
@@ -169,7 +164,7 @@ class FriendsController extends BaseController {
   
   
   
-   public function buscaramigos() { 
+   public function buscaramigos() { //TERMINADO
    
 		$currentuser = $_SESSION["currentuser"];
 		

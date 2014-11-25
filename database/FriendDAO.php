@@ -72,7 +72,8 @@ class FriendDAO {
      
   }
   
-  public function findFriendship($currentuser, $friendEmail){
+  
+  public function findPeticion($currentuser, $friendEmail){
  
 	$stmt = $this->db->prepare("SELECT * FROM friends WHERE userEmail=? and friendEmail=?");
     $stmt->execute(array($friendEmail,$currentuser->getEmail()));
@@ -90,6 +91,27 @@ class FriendDAO {
     } 
   }
   
+  
+  
+  
+  public function findFriendship($currentuser, $friendEmail){
+ 
+	$stmt = $this->db->prepare("SELECT * FROM users,friends WHERE friends.userEmail=? and users.email=friends.???????????????????????????????????????????????");
+    $stmt->execute(array($currentuser->getEmail(),$friendEmail,));
+	
+	$friendship = $stmt->fetch(PDO::FETCH_ASSOC);
+	
+	if(!sizeof($friendship) == 0) {
+		return new Friend(
+			$friendship["userEmail"],
+			$friendship["friendEmail"],
+			$friendship["isFriend"]
+		);
+    } else {
+		return NULL;
+    } 
+  }
+  /*
   public function findFriendship2($currentuser, $friendEmail){
  
 	$stmt = $this->db->prepare("SELECT * FROM friends WHERE userEmail=? and friendEmail=?");
@@ -107,7 +129,7 @@ class FriendDAO {
 		return NULL;
     } 
   }
-  
+  */
   
   /**
    * Loads a Post from the database given its id
@@ -120,8 +142,13 @@ class FriendDAO {
    */    
   public function findUsuarios($currentuser){ ///revisar????????????????????????????????????????''
   
-    $stmt = $this->db->prepare("SELECT * FROM users u WHERE not exists(select * from friends where (friends.userEmail=? and u.email=friends.friendEmail) or (friends.friendEmail=? and u.email=friends.userEmail)) and u.email!=?");//como poner el true solo va con 1 con true no?????????????????
-    $stmt->execute(array($currentuser->getEmail(),$currentuser->getEmail(), $currentuser->getEmail()));
+    $stmt = $this->db->prepare("SELECT * FROM users where email not in 
+								(
+									SELECT userEmail from friends where friendEmail = ?
+									UNION
+									SELECT friendEmail from friends where userEmail = ?
+								) and email!=?"	);
+    $stmt->execute(array($currentuser->getEmail(),$currentuser->getEmail(),$currentuser->getEmail()));
     //$user = $stmt->fetch(PDO::FETCH_ASSOC);
 	$friends_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
