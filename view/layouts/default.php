@@ -19,7 +19,7 @@
 <div class="container">
 
 	<header>
-		<a href="../view/layout/posts/inicio.php"> 
+		<a href="index.php?controller=posts&action=posts"> 
 			<h1 id="logo">FlaBoo</h1>
 		</a>
 		<a href="index.php?controller=users&action=logout"><img src="assets/img/logout.png"  alt="LogOut" height="58" width="62" id="logout"></a>
@@ -27,7 +27,7 @@
 	
 	<nav class="menusup">
 		<form action="index.php?controller=friends&action=buscaramigos" method="post" id="busqueda">
-			<input id="botongris" type="submit" value="Buscar amigos">
+			<input id="botongris" type="submit" value="<?= i18n("Buscar Amigos")?>">
 			<input id="cuadrobuscar" type="text" name="name_friend">		
 		</form>
 	</nav>
@@ -77,18 +77,24 @@
 				<div>
 					<a href="index.php?controller=friends&action=amigos"><img src="assets/img/amigos.png" alt="Amigos" height="60" width="60"></a>
 				</div>
-				<div class="letraderech">Amigos</div>
+				<div class="letraderech"><?= i18n("Amigos")?></div>
 			</li>
 			<li>
 				<div>
 					<a href="index.php?controller=friends&action=solicitudes"><img src="assets/img/solicitudes.png" alt="Solicitudes de amistad" height="60" width="60"></a>
 				</div>
-				<div class="letraderech">Solicitudes Amistad</div>
+				<div class="letraderech"><?= i18n("Solicitudes Amistad")?></div>
 			</li>
 		</ul>
 	</div>
 	
 	<footer>
+		<ul>
+			<li>SELECCIONA EL IDIOMA QUE DESEAS:</li>
+			<li><a href="index.php?controller=language&action=change&lang=es">Español</a></li>
+			<li><a href="index.php?controller=language&action=change&lang=en">Ingles</a></li>
+		</ul>
+	
 	</footer>
 	
 </div>

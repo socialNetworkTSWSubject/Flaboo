@@ -1,4 +1,4 @@
-
+﻿
 <?php 
  require_once(__DIR__."/../../core/ViewManager.php");
  $view = ViewManager::getInstance();
@@ -6,7 +6,7 @@
 ?>
 
 <div id="new_post">
-	<h1 id="nuevopost">Nuevo Post:</h1>
+	<h1 id="nuevopost"><?= i18n("Nuevo Post:")?></h1>
 	<h2 id="fecha">27/09/2014</h2> 
 	<div>
 		<form action="index.php?controller=posts&action=posts" method="post">
@@ -20,15 +20,15 @@
 	</div>
 </div>		
 
-	<h1 id="publicaciones">PUBLICACIONES</h1>
+	<h1 id="publicaciones"><?= i18n("PUBLICACIONES")?></h1>
 	<div class="comentario">
 		<img  class="usercomentario" src="assets/img/userb.jpg" alt="LogOut" height="50" width="50">
 		<div class="conjunto">
 			<h2 class="nombrecomentario" >Raquel Martínez Fernández</h2>
 			<h2 class="nombrecomentario">Comentado el 28/09/2014 a las 20:45</h2>
 		</div>
-		<button class="botonmegusta">Me gusta</button>
-		<h3>7 me gusta</h3> <!--El contador de me gusta creo que tambien se hace con php  -->
+		<button class="botonmegusta"><?= i18n("Me gusta")?></button>
+		<h3>7 <?= i18n("me gusta")?></h3> <!--El contador de me gusta creo que tambien se hace con php  -->
 		<p class="clearboth">Por fin de vacaciones!! Mañana viajaré a Londres con mi novio @Gabriel Martínez Gómez. Estoy feliz!!! :D</p>
 	</div>
 	<div class="comentario">
