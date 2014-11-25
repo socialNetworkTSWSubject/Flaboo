@@ -115,24 +115,27 @@ class PostDAO {
 				ON P.idPost = L.likePost
 				WHERE P.author = ?
 				ORDER BY P.datePost");
-	
-		$stmt->execute(array($author[0]->getEmail()));
-		$post_with_likes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	
-		if(sizeof($post_with_likes)>0){
-			$post = new Post($post_with_likes[0]["post.id"], $post_with_likes[0]["post.date"], $post_with_likes[0]["post.content"],
-					$post_with_likes[0]["post.numLikes"], $post_with_likes[0]["post.author"]);
-			$likes_array = array();
-			foreach ($post_with_likes as $like){
-				$like = new Like(new User($like["like.author"]), $post);
-				array_push($likes_array, $like);
+		
+		$array_post = array();
+		foreach($author as $idAuthor){ 
+			$stmt->execute(array($idAuthor[0]->getEmail()));  // tipo de dato de idAuthor?
+			$post_with_likes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			if(sizeof($post_with_likes)>0){
+				$post = new Post($post_with_likes[0]["post.id"], $post_with_likes[0]["post.date"], $post_with_likes[0]["post.content"],
+						$post_with_likes[0]["post.numLikes"], $post_with_likes[0]["post.author"]);
+				$likes_array = array();
+				foreach ($post_with_likes as $like){
+					$like = new Like(new User($like["like.author"]), $post);
+					array_push($likes_array, $like);
+				}
+				$post->setLikes($likes_array);
+				array_push($array_post,$post);
 			}
-			$post->setLikes($likes_array);
-			return $post;
-		} else return NULL;
+		} 
+		if(!empty($array_post)){
+			return $array_post;
+		} else return null;
 	}
-	
-	
 }
 
 
