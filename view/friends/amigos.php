@@ -17,6 +17,4 @@
 		</div>
 	</div>
 <?php endforeach; ?>
-
-<div class="vermas"><?= i18n("Ver mas")?></div>
 		

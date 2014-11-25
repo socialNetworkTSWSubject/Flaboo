@@ -101,7 +101,6 @@
 		<h3>7 me gusta</h3>
 		<p class="clearboth">Mi serie favorita :3 http://www.fox.com/bones/ Me encanta Temperance, es el mejor personaje :)</p>
 	</div>
-	<div class="vermas">Ver más</div> 
 </main>
 	
 	
