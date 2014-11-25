@@ -39,13 +39,9 @@ class PostsController extends BaseController {
   	if (!isset($this->currentUser)) {
   		throw new Exception("Not in session. Editing posts requires login");
   	}
-	//Array que contiene el email del usuario y sus amigos
-	$array_email = array();
-	array_push($array_email, $this->currentUser->getEmail());
-  	array_push($array_email, $this->friendDAO->findFriends($this->currentUser->getEmail()));
 	
 	$post = array();
-	$post = $this->postDAO->findByAuthor($array_email);
+	$post = $this->postDAO->findByAuthor($this->currentUser, $this->friendDAO->findFriends($this->currentUser));
   	
   	
   	if ($post == NULL) {
