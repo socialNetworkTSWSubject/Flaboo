@@ -20,6 +20,9 @@
 		<a href="login.html"> 
 			<h1 id="logo">FlaBoo</h1>
 		</a>
+		<li>SELECCIONA EL IDIOMA QUE DESEAS:</li>
+		<li><a href="index.php?controller=language&action=change&lang=es">Español</a></li>
+		<li><a href="index.php?controller=language&action=change&lang=en">Ingles</a></li>
 	</header>
 	<?= $view->popFlash() ?>
     <?= $view->getFragment(ViewManager::DEFAULT_FRAGMENT) ?>    

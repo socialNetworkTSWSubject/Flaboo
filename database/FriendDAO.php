@@ -57,8 +57,13 @@ class FriendDAO {
    * if the Post is not found
    */    
   public function findFriends($currentuser){ ///revisar????????????????????????????????????????''
-    $stmt = $this->db->prepare("SELECT * FROM friends, users WHERE friends.userEmail=? and users.email=friends.friendEmail and friends.isFriend='1'");//como poner el true solo va con 1 con true no?????????????????
-    $stmt->execute(array($currentuser->getEmail()));
+    $stmt = $this->db->prepare("SELECT * FROM users where email in 
+								(
+									SELECT userEmail from friends where friendEmail = ? and isFriend='1'
+									UNION
+									SELECT friendEmail from friends where userEmail = ? and isFriend='1'
+								)"	);
+    $stmt->execute(array($currentuser->getEmail(),$currentuser->getEmail()));
     //$user = $stmt->fetch(PDO::FETCH_ASSOC);
 	$friends_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
@@ -96,8 +101,9 @@ class FriendDAO {
   
   public function findFriendship($currentuser, $friendEmail){
  
-	$stmt = $this->db->prepare("SELECT * FROM users,friends WHERE friends.userEmail=? and users.email=friends.???????????????????????????????????????????????");
-    $stmt->execute(array($currentuser->getEmail(),$friendEmail,));
+	$stmt = $this->db->prepare("SELECT * FROM friends WHERE (friends.userEmail=? and friends.friendEmail=? )
+																OR (friends.userEmail=? and friends.friendEmail=?) and isFriend='1'");
+    $stmt->execute(array($currentuser->getEmail(),$friendEmail,$friendEmail,$currentuser->getEmail()));
 	
 	$friendship = $stmt->fetch(PDO::FETCH_ASSOC);
 	
@@ -111,25 +117,7 @@ class FriendDAO {
 		return NULL;
     } 
   }
-  /*
-  public function findFriendship2($currentuser, $friendEmail){
- 
-	$stmt = $this->db->prepare("SELECT * FROM friends WHERE userEmail=? and friendEmail=?");
-    $stmt->execute(array($currentuser->getEmail(),$friendEmail));
-	
-	$friendship = $stmt->fetch(PDO::FETCH_ASSOC);
-	
-	if(!sizeof($friendship) == 0) {
-		return new Friend(
-			$friendship["userEmail"],
-			$friendship["friendEmail"],
-			$friendship["isFriend"]
-		);
-    } else {
-		return NULL;
-    } 
-  }
-  */
+
   
   /**
    * Loads a Post from the database given its id

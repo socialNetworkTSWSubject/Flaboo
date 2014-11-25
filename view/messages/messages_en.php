@@ -20,12 +20,14 @@
     "Rechazar" => "Turn down",
     "Usuarios" => "Users",
 	"Enviar solicitud de amistad" => "Send friend request",
-	"Email" => "Email",
-    "Contraseña" => "Password",
+	"Correo electronico:" => "Email:",
+    "Password:" => "Password:",
+	"Repetir password:" => "Repeat password:",
     "Entrar" => "Enter",
-    "¿Aun no te has registrado?" => "Yet you have not registered ?",
+    "Aun no te has registrado" => "Yet you have not registered",
 	"Registrate en" => "Register for",
 	"Registrate!" => "Register!",
-    "Nombre y Apellidos" => "Name and surname",
+    "Nombre y Apellidos:" => "Name and surname:",
+	"Contacta con nosotros!" => "Contact us"
   )
 ?>

@@ -123,6 +123,8 @@ class FriendsController extends BaseController {
 			
 			$friendship = $this->friendDAO->findFriendship($currentuser, $friendEmail);
 			
+			//print_r($friendship);die();
+			
 			if ($friendship == NULL and $friendship2 == NULL) {
 			  throw new Exception("no hay ninguna relacion entre esos usuarios: ");
 			}
@@ -144,7 +146,7 @@ class FriendsController extends BaseController {
    }
   
  
-  public function amigos() { 
+  public function amigos() { //TERMINADO
   
     $currentuser = $_SESSION["currentuser"];
     
@@ -182,7 +184,7 @@ class FriendsController extends BaseController {
    
   }
   
-   public function solicitudes() { 
+   public function solicitudes() { //TERMINADO
    
 		$currentuser = $_SESSION["currentuser"];
 		
