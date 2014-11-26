@@ -36,20 +36,23 @@ class PostsController extends BaseController {
   }
   
   public function viewPosts() {
+  
+  
   	if (!isset($this->currentUser)) {
   		throw new Exception("Not in session. Editing posts requires login");
   	}
 	
-	$post = array();
-	$post = $this->postDAO->findByAuthor($this->currentUser, $this->friendDAO->findFriends($this->currentUser));
+
+	$posts = $this->postDAO->findByAuthor($this->currentUser, $this->friendDAO->findFriends($this->currentUser));
   	
   	
-  	if ($post == NULL) {
-  		throw new Exception("no such post");
+  	if ($posts == NULL) {
+  		throw new Exception("no such posts");
   	}
   	
-  	$this->view->setVariable("post", $post);
+  	$this->view->setVariable("posts", $posts);
   	$this->view->render("posts","inicio");
+	
   }
   
   

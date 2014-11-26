@@ -81,13 +81,13 @@ class PostDAO {
 				ORDER BY P.datePost");
 		
 		$stmt->execute(array($idPost));
-		$post_with_likes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$post = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		
-		if(sizeof($post_with_likes)>0){
+		if(sizeof($post)>0){
 			$post = new Post($post[0]["post.id"], $post[0]["post.date"], $post[0]["post.content"],
 					$post[0]["post.numLikes"], $post[0]["post.author"]);
 			$likes_array = array();
-			foreach ($post_with_likes as $like){
+			foreach ($post as $like){
 				$like = new Like(new User($like["like.author"]), $post);
 				array_push($likes_array, $like);
 			}
@@ -101,50 +101,30 @@ class PostDAO {
 	 * @param string $idAuthor
 	 * @return Post Las instancias de post|NULL en caso de no existir post
 	 */
-	public function findByAuthor(User $author, $friends){
-		$stmt = $this->db->prepare("SELECT
-				P.idPost as 'post.id',
-				P.datePost as 'post.date',
-				P.content as 'post.content',
-				P.numLikes as 'post.numLikes',
-				P.author as 'post.author',
-				L.authorLike as 'like.author',
-				L.likePost as 'like.idLike'
-	
-				FROM post P LEFT OUTER JOIN likes L
-				ON P.idPost = L.likePost
-				WHERE P.author = ?
-				ORDER BY P.datePost");
+	public function findByAuthor(User $author){
+		$stmt = $this->db->prepare("SELECT * FROM post where author in 
+								(
+									SELECT userEmail from friends where friendEmail = ? and isFriend='1'
+									UNION
+									SELECT friendEmail from friends where userEmail = ? and isFriend='1'
+								)"	);
+		$stmt->execute(array($author->getEmail(),$author->getEmail()));
+		$postFriends =$stmt->fetchAll(PDO::FETCH_ASSOC);
 		
 		$array_post = array();
-		foreach($friends as $friend){ 
-			$stmt->execute(array($friend->getEmail()));  // tipo de dato de idAuthor?
-			$post_with_likes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-			if(sizeof($post_with_likes)>0){
-				$post = new Post($post_with_likes[0]["post.id"], $post_with_likes[0]["post.date"], $post_with_likes[0]["post.content"],
-						$post_with_likes[0]["post.numLikes"], $post_with_likes[0]["post.author"]);
-				$likes_array = array();
-				foreach ($post_with_likes as $like){
-					$like = new Like(new User($like["like.author"]), $post);
-					array_push($likes_array, $like);
-				}
-				$post->setLikes($likes_array);
-				array_push($array_post,$post);
+		if(sizeof($postFriends)>0){
+			foreach($postFriends as $postFriend) {
+				array_push($array_post, new Post($postFriend["idPost"], $postFriend["datePost"], $postFriend["content"],
+					$postFriend["numLikes"], $postFriend["author"]));
 			}
-		} 
+		}
+		
 		if(!empty($array_post)){
 			return $array_post;
 		} else return null;
 	}
 }
-
-
-
-
-
-
-
-
-
-
 ?>
+	
+
+
