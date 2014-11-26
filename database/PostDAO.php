@@ -103,13 +103,16 @@ class PostDAO {
 	 */
 	public function findByAuthor(User $author){
 		$stmt = $this->db->prepare("SELECT * FROM post where author in 
-								(
-									SELECT userEmail from friends where friendEmail = ? and isFriend='1'
-									UNION
-									SELECT friendEmail from friends where userEmail = ? and isFriend='1'
-								)"	);
+		( 
+			SELECT userEmail from friends where friendEmail = ? and isFriend='1' 
+			UNION 
+			SELECT friendEmail from friends where userEmail = 'adri@gmail.com' and isFriend='1' 
+		)
+		UNION SELECT * from post where author = ? 
+		order by datePost");
 		$stmt->execute(array($author->getEmail(),$author->getEmail()));
 		$postFriends =$stmt->fetchAll(PDO::FETCH_ASSOC);
+		
 		
 		$array_post = array();
 		if(sizeof($postFriends)>0){
