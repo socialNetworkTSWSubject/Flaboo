@@ -34,9 +34,12 @@ class PostDAO {
 	 * @throws PDOException Si ocurre un error de base de datos
 	 * @return void
 	 */
-	public function save($post){
-		$stmt = $this->db->prepare("INSERT INTO post (datePost,content,numLikes,author) values(?,?,?)");
-		$stmt->execute(array($post->getDate(), $post->getContent(), $post->getNumLikes(), $post->getAuthor()));
+	public function save(Post $post){
+		$stmt = $this->db->prepare("INSERT INTO post(datePost,content,numLikes,author) values(?,?,?,?)");
+		$stmt->execute(array($post->getDate(), 
+		$post->getContent(), 
+		$post->getNumLikes(), 
+		$post->getAuthor()->getEmail()));
 	}
 	
 	
@@ -97,7 +100,7 @@ class PostDAO {
 	}
 	
 	/**
-	 * Carga todos los post con sus likes segun el autor
+	 * Carga todos los post
 	 * @param string $idAuthor
 	 * @return Post Las instancias de post|NULL en caso de no existir post
 	 */

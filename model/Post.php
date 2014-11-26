@@ -84,6 +84,13 @@ class Post
 	public function getDate(){
 		return $this->date;
 	}
+	/**
+	 * Modifica la fecha y hora de creacion del post
+	 * @param string $date La fecha y hora de creacion del post
+	 */	
+	public function setDate($date){
+		$this->date = $date;
+	}
 	
 	/**
 	 * Devuelve el contenido del post
@@ -94,11 +101,27 @@ class Post
 	}
 	
 	/**
+	 * Modifica el contenido del post
+	 * @param string $content El contenido del post
+	 */	
+	public function setContent($content){
+		$this->content = $content;
+	}
+	
+	/**
 	 * Devuelve el autor del post
 	 * @return string El autor del post
 	 */
 	public function getAuthor(){
 		return $this->author;
+	}
+	
+	/**
+	 * Modifica el autor del post
+	 * @param string El autor del post
+	 */
+	public function setAuthor($author){
+		$this->author = $author;
 	}
 	
 	/**

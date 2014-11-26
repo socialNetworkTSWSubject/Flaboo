@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `POST` (
   `idPost` int(9) NOT NULL AUTO_INCREMENT COMMENT 'id del post, unico y auto incremental',
   `datePost` timestamp COLLATE utf8_spanish_ci NOT NULL COMMENT 'fecha y hora en la que es creado el post, no puede ser nulo',
   `content` text COLLATE utf8_spanish_ci NOT NULL COMMENT 'Contenido del post. No puede ser nulo.',
-  `numLikes` int(4) NOT NULL COMMENT 'Numero de likes que tiene el post, no puede ser nulo',
+  `numLikes` int(4) DEFAULT NULL COMMENT 'Numero de likes que tiene el post, nulo por defecto',
   `author` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Email del autor del post, no puede ser nulo, clave foranea a USER.email',
   PRIMARY KEY (`idPost`),
   FOREIGN KEY (`author`) REFERENCES `USERS` (`email`)

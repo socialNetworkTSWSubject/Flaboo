@@ -8,14 +8,16 @@
 
 <div id="new_post">
 	<h1 id="nuevopost">Nuevo Post:</h1>
-	<h2 id="fecha">27/09/2014</h2> 
+	<h2 id="fecha"><?=date("m/d/y")?> </h2> 
 	<div>
-		<form action="index.php?controller=posts&action=posts" method="post">
+		<form action="index.php?controller=posts&action=addPost" method="post">
 			<div>
-				<textarea rows="5" cols="70"> </textarea>
+				<textarea name="content" rows="5" cols="70">
+				
+				</textarea>
 			</div>
 			<div>
-				<input id="botonazul" type="submit" value="Enviar">
+				<input id="botonazul" type="submit" name="submit" value="submit">
 			</div>
 		</form>
 	</div>
