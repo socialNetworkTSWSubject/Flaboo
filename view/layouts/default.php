@@ -19,7 +19,7 @@
 <div class="container">
 
 	<header>
-		<a href="index.php?controller=posts&action=posts"> 
+		<a href="index.php?controller=posts&action=viewPosts"> 
 			<h1 id="logo">FlaBoo</h1>
 		</a>
 		<a href="index.php?controller=users&action=logout"><img src="assets/img/logout.png"  alt="LogOut" height="58" width="62" id="logout"></a>

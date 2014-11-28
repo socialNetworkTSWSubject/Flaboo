@@ -27,9 +27,9 @@ class LikeDAO {
 	 * Incrementa un like en el post
 	 * @param Like $like
 	 */
-	public function addLikePost($like){
-		$stmt = $this->db->prepare("INSER INTO likes(authorLike,likePost) values(?,?)");
-		$stmt->execute(array($like->getAuthorLike(),$like->getlikePost()));
+	public function addLikePost(Like $like){
+		$stmt = $this->db->prepare("INSERT INTO likes(authorLike,likePost) values(?,?)");
+		$stmt->execute(array($like->getAuthor(),$like->getPost()->getIdPost()));
 	}
 	
 	/**
@@ -42,5 +42,27 @@ class LikeDAO {
 		$stmt->execute(array($idPost));
 		return $stmt->rowCount();
 	}
+	
+	/**
+	 * Comprueba si el usuario actual hizo like en ese post
+	 * @var User $user El objecto usuario actual
+	 * @var int $idPost El id del post
+	 * @return El numero de likes de ese post hechos por ese usuario
+	 */
+	public function isNewLike(User $user, $idPost){
+		$stmt = $this->db->prepare("SELECT * FROM likes WHERE authorLike = ? and likePost = ?");
+		$stmt->execute(array($user->getEmail(),$idPost));
+		return $stmt->rowCount();
+	}
+	
+	/**
+	 * Incrementa el numero de likes de un post
+	 * @var idPost El id del post
+	 */
+	public function increaseNumLikes($idPost){
+		$stmt = $this->db->prepare("UPDATE post SET numLikes = numLikes+1 WHERE idPost = ?");
+		$stmt->execute(array($idPost));
+	}
+	
 }
 ?>

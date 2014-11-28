@@ -65,8 +65,8 @@ class PostsController extends BaseController {
   	
   	if(isset($_POST["submit"])){
   		$post->setContent($_POST["content"]);
-  		$post->setDate($_POST["date"]);
-  		$post->setAuthor($this->currentUser);
+  		$post->setDate(date("Y-m-d H:i:s"));
+  		$post->setAuthor($this->currentUser->getEmail());
   	}
   	
   	try {
@@ -75,14 +75,8 @@ class PostsController extends BaseController {
   		
   		//Guarda el post en la base de datos
   		$this->postDAO->save($post);
-  		
-  		// POST-REDIRECT-GET
-  		// Everything OK, we will redirect the user to the list of posts
-  		// We want to see a message after redirection, so we establish
-  		// a "flash" message (which is simply a Session variable) to be
-  		// get in the view after redirection.
-  		$this->view->setFlash("Post \"".$post->getIdPost()."\" successfully added.");
-  		$this->view->redirect("posts", "inicio");
+  	
+  		$this->view->redirect("posts", "viewPosts");
   		
   		
   		

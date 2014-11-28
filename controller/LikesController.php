@@ -42,14 +42,19 @@ class LikesController extends BaseController{
 			throw new Exception("Not in session. Editing posts requires login");
 		}
 		
-		if (isset($_POST["id"])) { // reaching via HTTP Post...
-		
+		if (isset($_GET["id"])) { // reaching via HTTP Post...
+			
 			// Get the Post object from the database
-			$postid = $_POST["id"];
-			$post = $this->postDAO->findByIdPost($postid);
+			$idPost = $_GET["id"];
+			$post = $this->postDAO->findByIdPost($idPost);
 			
 			if ($post == NULL) {
-				throw new Exception("no such post with id: ".$postid);
+				throw new Exception("no such post with id: ".$idPost);
+			}
+			
+		
+			if($this->likeDAO->isNewLike($this->currentUser,$idPost) > 0){
+				throw new Exception("this user already made like in this post");
 			}
 			
 			//Create the Like Object
@@ -57,14 +62,15 @@ class LikesController extends BaseController{
 			
 			try {
 				$this->likeDAO->addLikePost($like);
-				$this->view->redirect("posts", "viewPost", "id=".$post->getIdPost());
+				$this->likeDAO->increaseNumLikes($idPost);
+				$this->view->redirect("posts", "viewPost");
 			} catch (ValidationException $ex){
 				$errors = $ex->getErrors();
 			
 				$this->view->setVariable("like", $like, true);
 				$this->view->setVariable("errors", $errors, true);
 					
-				$this->view->redirect("posts", "viewPost", "id=".$post->getIdPost());
+				$this->view->redirect("posts", "viewPost");
 			}
 		} else {
 			throw new Exception("No such post id");

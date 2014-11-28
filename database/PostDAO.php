@@ -36,66 +36,22 @@ class PostDAO {
 	 */
 	public function save(Post $post){
 		$stmt = $this->db->prepare("INSERT INTO post(datePost,content,numLikes,author) values(?,?,?,?)");
-		$stmt->execute(array($post->getDate(), 
-		$post->getContent(), 
-		$post->getNumLikes(), 
-		$post->getAuthor()->getEmail()));
+		$stmt->execute(array($post->getDate(),$post->getContent(),0,$post->getAuthor()));
 	}
 	
-	
-	
-// 	/**
-// 	 * Carga todos los post relativos al usuario actual
-// 	 * @param string $author El id del usuario actual
-// 	 * @return Post Las instancias de Post, NULL en caso de no encontrar los post 
-// 	 */
-// 	public function findByIdUser($author){
-// 		$stmt = $this->db->prepare("SELECT idPost,datePost,content,numLikes,author FROM POST WHERE 
-// 		author = some(SELECT friendEmail FROM FRIENDS WHERE userEmail = ? && isFriend = 1) ORDER BY datePost");
-// 		$stmt->execute(array($author));
-// 		$post = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// 		if($post>0){
-// 			$post = new Post($post[0]["idPost"], $post[0]["datePost"], $post[0]["content"], 
-// 					$post[0]["numLikes"], $post[0]["author"]);	
-// 			$likes = array();
-// 			return $post;
-// 		} else return null;
-// 	}
-	
 	/**
-	 * Carga todos los post con sus likes segun el id
+	 * Carga un post segun su id
 	 * @param string $idPost
-	 * @return Post Las instancias de post|NULL en caso de no existir post 
+	 * @return Post Las instancia de post|NULL en caso de no existir post con ese id 
 	 */
-	public function findByIdPost($idPost){
-		$stmt = $this->db->prepare("SELECT 
-				P.idPost as 'post.id',
-				P.datePost as 'post.date',
-				P.content as 'post.content',
-				P.numLikes as 'post.numLikes',
-				P.author as 'post.author',
-				L.authorLike as 'like.author',
-				L.likePost as 'like.idLike'
-				
-				FROM post P LEFT OUTER JOIN likes L 
-				ON P.idPost = L.likePost 
-				WHERE P.idPost = ?
-				ORDER BY P.datePost");
-		
-		$stmt->execute(array($idPost));
-		$post = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	public function findByIdPost($id){
+		$stmt = $this->db->prepare("SELECT * FROM post WHERE idPost = ?");
+		$stmt->execute(array($id));
+		$post = $stmt->fetch(PDO::FETCH_ASSOC);
 		
 		if(sizeof($post)>0){
-			$post = new Post($post[0]["post.id"], $post[0]["post.date"], $post[0]["post.content"],
-					$post[0]["post.numLikes"], $post[0]["post.author"]);
-			$likes_array = array();
-			foreach ($post as $like){
-				$like = new Like(new User($like["like.author"]), $post);
-				array_push($likes_array, $like);
-			}
-			$post->setLikes($likes_array);
-			return $post;
+			return new Post($post["idPost"], $post["datePost"], $post["content"],
+					$post["numLikes"], $post["author"]);
 		} else return NULL;
 	}
 	

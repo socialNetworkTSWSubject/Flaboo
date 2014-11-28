@@ -30,8 +30,10 @@
 			<h2 class="nombrecomentario" ><?=$post->getAuthor()?></h2>
 			<h2 class="nombrecomentario"><?=$post->getDate()?></h2>
 		</div>
-		<button class="botonmegusta">Me gusta</button>
-		<h3>7 me gusta</h3> <!--El contador de me gusta creo que tambien se hace con php  -->
+		<a href="index.php?controller=likes&action=addLike&id=<?=$post->getIdPost()?>">
+			<button class="botonmegusta" name="idPost">Me gusta</button>
+		</a>
+		<h3><?=$post->getNumLikes()?></h3>
 		<p class="clearboth"><?=$post->getContent()?></p>
 	</div>
 <?php endforeach; ?>

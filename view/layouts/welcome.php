@@ -17,7 +17,7 @@
 <div class="container2">
 
 	<header>
-		<a href="login.html"> 
+		<a href="index.php"> 
 			<h1 id="logo">FlaBoo</h1>
 		</a>
 		<li>SELECCIONA EL IDIOMA QUE DESEAS:</li>

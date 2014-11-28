@@ -182,10 +182,10 @@ class UsersController extends BaseController {
    */
   public function logout() {
     session_destroy();
-	
+	/*
 	echo "cerrando sesion de: ";
 	echo $_SESSION["currentuser"];
-    
+    */
     // perform a redirection. More or less: 
     // header("Location: index.php?controller=users&action=login")
     // die();
