@@ -8,22 +8,22 @@ require_once(__DIR__."/../controller/BaseController.php");
 /**
  * Class UsersController
  * 
- * Controller to login, logout and user registration
+ * Controlador relativo a los post cuyas funcionalidades 
+ * son mostrar y añadir nuevos post
  * 
- * @author lipido <lipido@gmail.com>
+ * @author jenifer <jeny-093@hotmail.com>
+ * @author adrian <adricelixfernandez@gmail.com>
  */
 class PostsController extends BaseController {
   
   /**
-   * Reference to the PostDAO to interact with the database
-   * 
+   * Referencia a la clase PostDAO que interactua con la BD
    * @var PostDAO
    */  
   private $postDAO; 
   
   /**
-   * Reference to the FriendDAO to interact with the database
-   * 
+   * Referencia a la clase PostDAO que interactua con la BD
    * @var FriendDAO
    */
   private $friendDAO;
@@ -36,15 +36,12 @@ class PostsController extends BaseController {
   }
   
   public function viewPosts() {
-  
-  
+ 
   	if (!isset($this->currentUser)) {
   		throw new Exception("Not in session. Editing posts requires login");
   	}
 	
-
 	$posts = $this->postDAO->findByAuthor($this->currentUser, $this->friendDAO->findFriends($this->currentUser));
-  	
   	
   	if ($posts == NULL) {
   		throw new Exception("no such posts");
@@ -52,7 +49,6 @@ class PostsController extends BaseController {
   	
   	$this->view->setVariable("posts", $posts);
   	$this->view->render("posts","inicio");
-	
   }
   
   
@@ -70,30 +66,22 @@ class PostsController extends BaseController {
   	}
   	
   	try {
-  		//Valide Post Object
+  		//Valida el objeto Post
   		$post->checkIsValidForCreate();
   		
   		//Guarda el post en la base de datos
   		$this->postDAO->save($post);
-  	
+		
+		//Redirecciona a la accion viewPost del controlador Post
   		$this->view->redirect("posts", "viewPosts");
-  		
-  		
-  		
+
   	} catch(ValidationException $ex){
   		$errors = $ex->getErrors();
   		$this->view->setVariable("errors", $errors);
     }
   	
     $this->view->setVariable("post", $post);
-    $this->view->render("posts", "inicio");
-    
-  	
-  	
-  	
-  	
-  	
-  	
+    $this->view->render("posts", "inicio");	
   }
   
   

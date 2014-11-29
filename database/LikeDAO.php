@@ -5,7 +5,9 @@ require_once(__DIR__."/../core/PDOConnection.php");
 /**
  * Class LikeDAO
  *
- * Database interface for Post entities
+ * DAO que encapsula las sentencias SQL necesarias para gestionar los likes de la BD
+ * Implementa los metodos de almacenar un like, comprobar si un usuario concreto hizo
+ * like en un post e incrementar el numero de likes en post dado 
  *
  * @author jenifer <jeny-093@hotmail.com>
  * @author adrian <adricelixfernandez@gmail.com>

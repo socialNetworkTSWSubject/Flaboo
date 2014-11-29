@@ -10,7 +10,8 @@ require_once(__DIR__."/../controller/BaseController.php");
 
 /**
  * Class LikesController
- * Controlador relativo a los likes de un post
+ * Controlador relativo a los likes de un post cuya funcionalidad es 
+ * añadir un like
  * 
  * @author jenifer <jeny-093@hotmail.com>
  * @author adrian <adricelixfernandez@gmail.com>
@@ -19,13 +20,13 @@ require_once(__DIR__."/../controller/BaseController.php");
 class LikesController extends BaseController{
 	
 	/**
-	 * Reference to the LikeDAO to interact with the database
+	 * Referencia a la clase LikeDAO que interactua con la BD
 	 * @var likeDAO
 	 */
 	private $likeDAO;
 	
 	/**
-	 * Reference to the PostDAO to interact with de database
+	 * Referencia a la clase PostDAO que interactua con la BD
 	 * @var postDAO 
 	 */
 	private $postDAO;
@@ -37,24 +38,30 @@ class LikesController extends BaseController{
 		$this->postDAO = new PostDAO();
 	}
 	
+	/**
+	 * Metodo del controlador Likes cuya funcionalidad es añadir un like en un
+	 * post. Verifica que el usuario haya iniciado sesion, que el post existe y
+	 * que el usuario no ha hecho like previamente sobre ese post.
+	 *
+	 * @return void
+	 */
 	public function addLike(){
 		if (!isset($this->currentUser)) {
 			throw new Exception("Not in session. Editing posts requires login");
 		}
 		
-		if (isset($_GET["id"])) { // reaching via HTTP Post...
+		if (isset($_GET["id"])) { 
 			
 			// Get the Post object from the database
 			$idPost = $_GET["id"];
 			$post = $this->postDAO->findByIdPost($idPost);
 			
 			if ($post == NULL) {
-				throw new Exception("no such post with id: ".$idPost);
+				throw new Exception("No such post with id: ".$idPost);
 			}
 			
-		
 			if($this->likeDAO->isNewLike($this->currentUser,$idPost) > 0){
-				throw new Exception("this user already made like in this post");
+				throw new Exception("This user already made like in this post");
 			}
 			
 			//Create the Like Object

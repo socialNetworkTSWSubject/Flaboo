@@ -9,7 +9,8 @@ require_once(__DIR__."/../model/Like.php");
 /**
  * Class UserDAO
  *
- * Database interface for Post entities
+ * DAO que encapsula las sentencias SQL necesarias para gestionar los post de la BD
+ * Implementa los metodos de almacenar post, buscar post por ID y buscar post por autor
  *
  * @author jenifer <jeny-093@hotmail.com>
  * @author adrian <adricelixfernandez@gmail.com>
@@ -56,7 +57,7 @@ class PostDAO {
 	}
 	
 	/**
-	 * Carga todos los post
+	 * Carga todos los post cuyo autor es el usuario actual o sus amigos
 	 * @param string $idAuthor
 	 * @return Post Las instancias de post|NULL en caso de no existir post
 	 */
