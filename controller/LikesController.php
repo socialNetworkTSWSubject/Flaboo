@@ -63,14 +63,14 @@ class LikesController extends BaseController{
 			try {
 				$this->likeDAO->addLikePost($like);
 				$this->likeDAO->increaseNumLikes($idPost);
-				$this->view->redirect("posts", "viewPost");
+				$this->view->redirect("posts", "viewPosts");
 			} catch (ValidationException $ex){
 				$errors = $ex->getErrors();
 			
 				$this->view->setVariable("like", $like, true);
 				$this->view->setVariable("errors", $errors, true);
 					
-				$this->view->redirect("posts", "viewPost");
+				$this->view->redirect("posts", "viewPosts");
 			}
 		} else {
 			throw new Exception("No such post id");
