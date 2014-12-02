@@ -18,12 +18,12 @@ class Friend {
    */
   private $userEmail;
   /**
-   * La contraseña del usuario
+   * El email del usuario amigo
    * @var string
    */
   private $friendEmail;
     /**
-   * El nombre del usuario
+   * Variable de amistad (1=amigos, 0=peticion)
    * @var string
    */
   private $isFriend;
@@ -31,9 +31,9 @@ class Friend {
   /**
    * El constructor
    * 
-   * @param string $email El email del usuario
-   * @param string $password La contraseña del usuario
-   * @param string $name El nombre del usuario
+   * @param string $userEmail El email del usuario
+   * @param string $friendEmail El email del usuario amigo
+   * @param string $isFriend Variable de amistad (1=amigos, 0=peticion)
    */
   public function __construct($userEmail=NULL, $friendEmail=NULL, $isFriend=NULL) {
     $this->userEmail = $userEmail;
@@ -51,7 +51,7 @@ class Friend {
   /**
    * Modifica el email de ese usuario
    * 
-   * @param string $email El email de ese usuario
+   * @param string $userEmail El email de ese usuario
    * @return void
    */  
   public function setUserEmail($userEmail) {
@@ -59,34 +59,34 @@ class Friend {
   }
   
   /**
-   * Devuelve la contraseña de ese usuario
+   * Devuelve el email del usuario amigo
    * 
-   * @return string la contraseña de ese usuario
+   * @return string El email del usuario amigo
    */  
   public function getFriendEmail() {
     return $this->friendEmail;
   }  
   /**
-   * Modifica la contraseña de ese usuario
+   * Modifica El email del usuario amigo
    * 
-   * @param string $password la contraseña de ese usuario
+   * @param string $friendEmail El email del usuario amigo
    * @return void
    */    
   public function setFriendEmail($friendEmail) {
     $this->friendEmail = $friendEmail;
   }
    /**
-   * Devuelve el nombre de ese usuario
+   * Devuelve Variable de amistad (1=amigos, 0=peticion)
    * 
-   * @return string el nombre de ese usuario
+   * @return boolean Variable de amistad (1=amigos, 0=peticion)
    */  
   public function getIsFriend() {
     return $this->isFriend;
   }  
   /**
-   * Modifica nombre de ese usuario
+   * Modifica Variable de amistad (1=amigos, 0=peticion)
    * 
-   * @param string $name el nombre de ese usuario
+   * @param boolean $isFriend Variable de amistad (1=amigos, 0=peticion)
    * @return void
    */    
   public function setIsFriend($isFriend) {

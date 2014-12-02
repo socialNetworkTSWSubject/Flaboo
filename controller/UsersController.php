@@ -22,113 +22,85 @@ class UsersController extends BaseController {
   public function __construct() {    
     parent::__construct();
     
-    $this->userDAO = new UserDAO();
-    // Users controller operates in a "welcome" layout
-    // different to the "default" layout where the internal
-    // menu is displayed
-    //   
+	//Inicializa la variable
+    $this->userDAO = new UserDAO(); 
   }
   
   
  /**
-   * Este metodo se llama cuando el usuario pulsa "Aceptar"
-   * en las peticiones de amistad. 
+   * Este metodo se llama cuando el usuario quiere hacer login 
    * 
-   * @var UserMapper
    * @return void
-   * @throws Exception If no such post of the given id is found
    */ 
   public function login() {
-    if (isset($_POST["email"])){ // reaching via HTTP Post...
-      //process login form    
+  
+    if (isset($_POST["email"])){ 
+      
+	  //Si el usuario es valido
       if ($this->userDAO->isValidUser($_POST["email"], $_POST["password"])) {
 		
+		//encuentra los datos del usuario para meterlos en la sesion (mete todo el objeto)
 		$user = $this->userDAO->findByEmail($_POST["email"]);
 		$_SESSION["currentuser"]=$user;
 		
-		// Envia al usuario al metodo posts del PostsController. (aora lo ke hace ese metodo es mandar al usuario a inicio.php/ adri lo tiene que cambiar)
+		// Envia al usuario al metodo posts del PostsController.
 		$this->view->redirect("posts", "viewPosts");
 	
+	   //Si los datos introducidos no son validos devuelve error
       }else{
 		$errors = array();
 		$errors["emaillogin"] = "El email no es válido";
 		$this->view->setVariable("errors", $errors);
       }
     }   
-	//cambia el titulo de la pagina por ---login---
-	$this->view->setVariable("title", "---- login----");
-	// layouts welcome.php
+	
+	// utiliza el layout welcome.php
     $this->view->setLayout("welcome");  
-    // render the view (/view/users/login.php)
+    // renderiza la vista (/view/users/login.php)
     $this->view->render("users", "login"); 
   }
   
   
   
- /**
-   * Action to register
-   * 
-   * When called via GET, it shows the register form.
-   * When called via POST, it tries to add the user
-   * to the database.
-   * 
-   * The expected HTTP parameters are:
-   * <ul>
-   * <li>login: The username (via HTTP POST)</li>
-   * <li>passwd: The password (via HTTP POST)</li>      
-   * </ul>
-   *
-   * The views are:
-   * <ul>
-   * <li>users/register: If this action is reached via HTTP GET (via include)</li>
-   * <li>users/login: If login succeds (via redirect)</li>
-   * <li>users/register: If validation fails (via include). Includes these view variables:</li>
-   * <ul>   
-   *  <li>user: The current User instance, empty or being added
-   *  (but not validated)</li>      
-   *  <li>errors: Array including validation errors</li>   
-   * </ul>   
-   * </ul>
+/**
+   * Este metodo se llama cuando el usuario quiere registrarse 
    * 
    * @return void
-   */
+   */ 
   public function register() {
     
     $user = new User();
     
-    if (isset($_POST["email"])){ // reaching via HTTP Post...
+    if (isset($_POST["email"])){ 
       
-      // populate the User object with data form the form
+      // Guarda los datos introducidos por POST en el objeto
       $user->setEmail($_POST["email"]);
       $user->setPassword($_POST["password"]);
 	  $user->setName($_POST["name"]);
       
       try{
-		$user->checkIsValidForRegister($_POST["repeat_password"]); // if it fails, ValidationException
+		  //mira si los datos son correctos y si no lo son lanza excepcion
+		  $user->checkIsValidForRegister($_POST["repeat_password"]);
 	
-	// check if user exists in the database
-	if (!$this->userDAO->emailExists($_POST["email"])){
+		  // Comprueba si el email ya esta registrado
+		  if (!$this->userDAO->emailExists($_POST["email"])){
 		
+		  // Guarda el usuario en la base de datos
+		  $this->userDAO->save($user);
+		  
+		  //Muestra mensaje de confirmacion
+		  $this->view->setFlash("Email ".$user->getEmail()." añadido. Por favor, logueate ahora");
+		  
+		  //Redirige al metodo login del controlador de usuarios
+		  $this->view->redirect("users", "login");
+		  
+		 //Si el email ya esta registrado muestra un error 
+		} else {
+		  $errors = array();
+		  $errors["email"] = "Este email ya existe";
+		  $this->view->setVariable("errors", $errors);
+		}
 		
-	  // save the User object into the database
-	  $this->userDAO->save($user);
-	  
-	  // POST-REDIRECT-GET
-	  // Everything OK, we will redirect the user to the list of posts
-	  // We want to see a message after redirection, so we establish
-	  // a "flash" message (which is simply a Session variable) to be
-	  // get in the view after redirection.
-	  $this->view->setFlash("Email ".$user->getEmail()." añadido. Por favor, logueate ahora");
-	  
-	  // perform the redirection. More or less: 
-	  // header("Location: index.php?controller=users&action=login")
-	  // die();
-	  $this->view->redirect("users", "login");
-	} else {
-	  $errors = array();
-	  $errors["email"] = "Este email ya existe";
-	  $this->view->setVariable("errors", $errors);
-	}
       }catch(ValidationException $ex) {
 		// Get the errors array inside the exepction...
 		$errors = $ex->getErrors();
@@ -137,39 +109,24 @@ class UsersController extends BaseController {
       }
     }
     
-	//cambia el titulo de la pagina por ---login---
-	$this->view->setVariable("title", "---- login----");
-	// Put the User object visible to the view
+	// Guarda en user el contenido de $user
     $this->view->setVariable("user", $user);
 	// layouts welcome.php
     $this->view->setLayout("welcome");  
-    // render the view (/view/users/login.php)
+    // renderiza la vista (/view/users/login.php)
     $this->view->render("users", "login"); 
 	
   }
+  
+  
  /**
-   * Action to logout
+   * Este metodo se llama cuando el usuario quiere cerrar sesion 
    * 
-   * This action should be called via GET
-   * 
-   * No HTTP parameters are needed.
-   *
-   * The views are:
-   * <ul>
-   * <li>users/login (via redirect)</li>
-   * </ul>
-   *
    * @return void
-   */
+   */ 
   public function logout() {
     session_destroy();
-	/*
-	echo "cerrando sesion de: ";
-	echo $_SESSION["currentuser"];
-    */
-    // perform a redirection. More or less: 
-    // header("Location: index.php?controller=users&action=login")
-    // die();
+	//redirige al metodo login del controlador de usuarios
     $this->view->redirect("users", "login");
    
   }

@@ -1,12 +1,9 @@
 <?php
-// file: model/User.php
 
 require_once(__DIR__."/../core/ValidationException.php");
 
 /**
- * Class User
- * 
- * Representa un usuario en la red social
+ * Clase User
  * 
  * @author jenifer <jeny-093@hotmail.com>
  * @author adrian <adricelixfernandez@gmail.com>
@@ -101,7 +98,7 @@ class User {
    * 
    * @return void
    */  
-  public function checkIsValidForRegister($repeat_password) {//No hay que controlar la longitud máxima????????????????
+  public function checkIsValidForRegister($repeat_password) {
       $errors = array();
       if (strlen($this->email) < 5) {
 		$errors["email"] = "El email debe tener por lo menos 5 caracteres";

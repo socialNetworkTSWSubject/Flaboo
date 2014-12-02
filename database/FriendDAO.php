@@ -1,12 +1,10 @@
 <?php
-// file: database/UserDAO.php
 
 require_once(__DIR__."/../core/PDOConnection.php");
 
 /**
- * Class UserDAO
+ * Class FriendDAO
  *
- * Database interface for User entities
  * 
  * @author jenifer <jeny-093@hotmail.com>
  * @author adrian <adricelixfernandez@gmail.com>
@@ -14,7 +12,7 @@ require_once(__DIR__."/../core/PDOConnection.php");
 class FriendDAO {
   /**
    * Referencia a la nonexión PDO
-   * @var PDO
+   * @var db
    */
   private $db;
   
@@ -24,10 +22,9 @@ class FriendDAO {
   
   
   /**
-   * Guarda un usuario en la base de datos
+   * Guarda la amistad en la base de datos
    * 
-   * @param User $user El usuario a ser guardado
-   * @throws PDOException Si ocurre un error de base de datos
+   * @param Friend $friend La amistad a ser guardada
    * @return void
    */      
   public function save($friend) {
@@ -36,27 +33,35 @@ class FriendDAO {
     $stmt->execute(array($friend->getUserEmail(), $friend->getFriendEmail(), $friend->getIsFriend()));  
   }
   
+  /**
+   * Actualiza la variable setFriends a '1'
+   * 
+   * @param Friend $friendship La amistad a ser actualizada
+   * @return void
+   */ 
   public function updateIsFriend($friendship){
 	$stmt = $this->db->prepare("UPDATE friends set isFriend=1 where userEmail=? and friendEmail=?");
     $stmt->execute(array($friendship->getUserEmail(), $friendship->getFriendEmail()));  
   }
   
+  /**
+   * Borra la amistad
+   * 
+   * @param Friend $friendship La amistad a ser borrada
+   * @return void
+   */ 
   public function deleteFriendship($friendship){
 	$stmt = $this->db->prepare("DELETE from friends WHERE userEmail=? and friendEmail=?");
     $stmt->execute(array($friendship->getUserEmail(),$friendship->getFriendEmail()));  
   }
   
-  
-   /**
-   * Loads a Post from the database given its id
+  /**
+   * Encuentra los amigos de currentuser
    * 
-   * Note: Comments are not added to the Post
-   *
-   * @throws PDOException if a database error occurs
-   * @return Post The Post instances (without comments). NULL 
-   * if the Post is not found
+   * @param User $currentuser El usuario actual
+   * @return array()
    */    
-  public function findFriends($currentuser){ ///revisar????????????????????????????????????????''
+  public function findFriends($currentuser){ 
     $stmt = $this->db->prepare("SELECT * FROM users where email in 
 								(
 									SELECT userEmail from friends where friendEmail = ? and isFriend='1'
@@ -64,7 +69,6 @@ class FriendDAO {
 									SELECT friendEmail from friends where userEmail = ? and isFriend='1'
 								)"	);
     $stmt->execute(array($currentuser->getEmail(),$currentuser->getEmail()));
-    //$user = $stmt->fetch(PDO::FETCH_ASSOC);
 	$friends_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
 	$friends=array();
@@ -77,10 +81,17 @@ class FriendDAO {
      
   }
   
-  
+  /**
+   * Encuentra la peticion de amistad entre el currentuser y el usuario
+   * con el que busca la amistad
+   * 
+   * @param User $currentuser El usuario actual
+   * @param User $friendEmail El usuario de la peticion
+   * @return Friend
+   */ 
   public function findPeticion($currentuser, $friendEmail){
  
-	$stmt = $this->db->prepare("SELECT * FROM friends WHERE userEmail=? and friendEmail=?");
+	$stmt = $this->db->prepare("SELECT * FROM friends WHERE userEmail=? and friendEmail=? and isFriend='0'");
     $stmt->execute(array($friendEmail,$currentuser->getEmail()));
 	
 	$friendship = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -96,9 +107,13 @@ class FriendDAO {
     } 
   }
   
-  
-  
-  
+  /**
+   * Encuentra la relacion de amistad entre los usuarios
+   * 
+   * @param User $currentuser El usuario actual
+   * @param User $friendEmail El usuario amigos
+   * @return Friend
+   */ 
   public function findFriendship($currentuser, $friendEmail){
  
 	$stmt = $this->db->prepare("SELECT * FROM friends WHERE (friends.userEmail=? and friends.friendEmail=? )
@@ -120,15 +135,13 @@ class FriendDAO {
 
   
   /**
-   * Loads a Post from the database given its id
+   * Encuentra los usuarios que no tienen ningun tipo de 
+   * relacion de amistad con el curretuser
    * 
-   * Note: Comments are not added to the Post
-   *
-   * @throws PDOException if a database error occurs
-   * @return Post The Post instances (without comments). NULL 
-   * if the Post is not found
-   */    
-  public function findUsuarios($currentuser){ ///revisar????????????????????????????????????????''
+   * @param User $currentuser El usuario actual
+   * @return array de Friends
+   */     
+  public function findUsuarios($currentuser){ 
   
     $stmt = $this->db->prepare("SELECT * FROM users where email not in 
 								(
@@ -150,7 +163,14 @@ class FriendDAO {
      
   }
   
-  
+  /**
+   * Guarda la relacion de amistad entre el currentuser y el
+   * usuario al que realiza la peticion de amistad
+   * 
+   * @param User $currentuser El usuario actual
+   * @param User $friendEmail El usuario amigo
+   * @return array de Friends
+   */
   public function saveFriedship($currentuser, $friendEmail){ 
   
 	$stmt = $this->db->prepare("INSERT INTO friends(userEmail, friendEmail, isFriend) values (?,?,0)");
@@ -158,17 +178,13 @@ class FriendDAO {
   
   }
   
-  
   /**
-   * Loads a Post from the database given its id
+   * Encuentra las solicitudes de amistad que tiene el currentuser
    * 
-   * Note: Comments are not added to the Post
-   *
-   * @throws PDOException if a database error occurs
-   * @return Post The Post instances (without comments). NULL 
-   * if the Post is not found
-   */    
-  public function findSolicitudes($currentuser){ ///revisar????????????????????????????????????????''
+   * @param User $currentuser El usuario actual
+   * @return array de Friends
+   */   
+  public function findSolicitudes($currentuser){ 
  
     $stmt = $this->db->prepare("SELECT * FROM friends, users WHERE friends.friendEmail=? and users.email=friends.userEmail and friends.isFriend='0' ");//como poner el true ?????????????????
     $stmt->execute(array($currentuser->getEmail()));
