@@ -7,198 +7,226 @@ require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 require_once(__DIR__."/../controller/BaseController.php");
 /**
- * Class UsersController
+ * Clase FriendsController
  * 
  * Controller to login, logout and user registration
  * 
- * @author lipido <lipido@gmail.com>
+ * @author adrian <adricelixfernandez@gmail.com>
+ * @author jenifer <jeni093@gmail.com>
  */
 class FriendsController extends BaseController {
   
   /**
-   * Reference to the UserDAO to interact
-   * with the database
+   * Referencia al FriendDAO para interactuar con la base de datos
    * 
-   * @var UserMapper
+   * @var friendDAO
    */  
   private $friendDAO;    
   
   public function __construct() {    
     parent::__construct();
     
-    $this->friendDAO = new FriendDAO(); 
-    // Users controller operates in a "welcome" layout
-    // different to the "default" layout where the internal
-    // menu is displayed
-    //   
+	//inicializa la variable
+    $this->friendDAO = new FriendDAO();  
   }
   
-   public function aceptarAmistad() { //TERMINADO
+  /**
+   * Este metodo se llama cuando el usuario pulsa "Aceptar"
+   * en las peticiones de amistad. 
+   * 
+   * @return void
+   * @throws Exception si no hay una solicitud de amistad entre esos usuarios.
+   */ 
+   public function aceptarAmistad() {
    
 		$currentuser = $_SESSION["currentuser"];
 		
 		if (isset($_GET["id"])){
-
+			// con esto coge el id del usuario al que acepta la solicitud
 			$friendEmail=$_GET["id"];
 			
+			//Encuentra la relacion de amistad de esta peticion en concreto
 			$friendship = $this->friendDAO->findPeticion($currentuser, $friendEmail);
 			
+			//Si no existe la petición surge una excepción
 			if ($friendship == NULL) {
 			  throw new Exception("no hay ninguna relacion entre esos usuarios: ");
 			}
 			
-			// find the Post object in the database
+			// Actualiza la relación de amistad en la tabla friend con isFriend=1
 			$this->friendDAO->updateIsFriend($friendship);
+			
 			//redirige al metodo solicitudes del controlador friends
 			$this->view->redirect("friends", "solicitudes");
 			 
 		}
-		//cambia el titulo de la pagina por ---login---
-		$this->view->setVariable("title", "---- solicitudes----");
 		
-		// render the view (/view/users/login.php)
+		// renderiza la vista (/view/friends/solicitudes.php)
 		$this->view->render("friends", "solicitudes");   
    
    }
-  
-   public function rechazarAmistad() { //TERMINADO
+   
+   /**
+   * Este metodo se llama cuando el usuario pulsa "Rechazar"
+   * en las peticiones de amistad. 
+   * 
+   * @return void
+   * @throws Exception si no hay ninguna solicitud de amistad entre los usuarios
+   */ 
+   public function rechazarAmistad() { 
 	
 		$currentuser = $_SESSION["currentuser"];
 		
 		if (isset($_GET["id"])){
-
+			//Cone esto coge el id del usuario al que rechaza la solicitud
 			$friendEmail=$_GET["id"];
 			
+			//Encuentra la peticion de amistad en la tabla friends
 			$friendship = $this->friendDAO->findPeticion($currentuser, $friendEmail);
 			
+			//Si no existe la peticion salta una excepcion
 			if ($friendship == NULL) {
 			  throw new Exception("no hay ninguna relacion entre esos usuarios: ");
 			}
 			
-			// find the Post object in the database
+			// Elimina la fila en friends
 			$this->friendDAO->deleteFriendship($friendship);
+			
 			//redirige al metodo solicitudes del controlador friends
 			$this->view->redirect("friends", "solicitudes");
 			 
 		}
-		//cambia el titulo de la pagina por ---login---
-		$this->view->setVariable("title", "---- solicitudes----");
 		
-		// render the view (/view/users/login.php)
+		// render the view (/view/friends/solicitudes.php)
 		$this->view->render("friends", "solicitudes");  
    
    }
    
-   
-    public function solicitarAmistad() { //TERMINADO
+   /**
+   * Este metodo se llama cuando el usuario pulsa "Solicitar amistad"
+   * a un usuario. 
+   * 
+   * @return void
+   */ 
+    public function solicitarAmistad() { 
 	
 		$currentuser = $_SESSION["currentuser"];
 		
 		if (isset($_GET["id"])){
-
+			//Recupera el id del usuario al que pide amistad
 			$friendEmail=$_GET["id"];
 			
+			//Guarda la relacion en la base de datos con isFriend=0
 			$this->friendDAO->saveFriedship($currentuser, $friendEmail);
 			
-			//redirige al metodo solicitudes del controlador friends
+			//redirige al metodo buscaramigos del controlador friends
 			$this->view->redirect("friends", "buscaramigos");
 			 
 		}
-		//cambia el titulo de la pagina por ---login---
-		$this->view->setVariable("title", "---- Buscar Amigos----");
 		
-		// render the view (/view/users/login.php)
+		// renderiza la vista (/view/friends/buscaramigos.php)
 		$this->view->render("friends", "buscaramigos");  
    
    }
    
-   
+   /**
+   * Este metodo se llama cuando el usuario pulsa "Eliminar amigo"
+   * al visualizar la lista de amigos. 
+   * 
+   * @return void
+   * @throws Exception si no hay ninguna relacion entre los usuarios
+   */ 
    public function eliminarAmigo(){
    
 		$currentuser = $_SESSION["currentuser"];
 		
 		if (isset($_GET["id"])){
-
+			//Recupera el id del usuario que elimina
 			$friendEmail=$_GET["id"];
 			
+			//encuentra la relacion de amistad entre los usuarios currentuser y friendEmail
 			$friendship = $this->friendDAO->findFriendship($currentuser, $friendEmail);
 			
-			//print_r($friendship);die();
-			
-			if ($friendship == NULL and $friendship2 == NULL) {
+			//Si no existe relación salta una excepcion
+			if ($friendship == NULL) {
 			  throw new Exception("no hay ninguna relacion entre esos usuarios: ");
 			}
-			if (!$friendship == NULL) {
-			  $this->friendDAO->deleteFriendship($friendship);
-			}
 			
-			// find the Post object in the database
+			//Elimina la relacion de amistad
+			$this->friendDAO->deleteFriendship($friendship);
 			
-			//redirige al metodo solicitudes del controlador friends
+			//redirige al metodo amigos del controlador friends
 			$this->view->redirect("friends", "amigos");
 			 
 		}
-		//cambia el titulo de la pagina por ---login---
-		$this->view->setVariable("title", "---- amigos----");
 		
-		// render the view (/view/users/login.php)
+		// renderiza la vista (/view/friends/amigos.php)
 		$this->view->render("friends", "amigos");  
    }
   
- 
-  public function amigos() { //TERMINADO
+ /**
+   * Este metodo se llama cuando el usuario pulsa "Mis amigos"
+   * en la página de inicio. Se visualizan sua amigos 
+   * 
+   * @return void
+   */ 
+  public function amigos() { 
   
     $currentuser = $_SESSION["currentuser"];
     
     // find the Post object in the database
     $friends = $this->friendDAO->findFriends($currentuser);
     
-    if ($friends == NULL) {
-      throw new Exception("No se encontro ningun amigo de: ".$currentuser->getName());
-    }
-    
-    // put the Post object to the view
+    // Guarda en la variable friends el objeto $friends para visualizarlo en la vista
     $this->view->setVariable("friends", $friends);
   
+	// renderiza la vista (view/friends/amigos.php)
     $this->view->render("friends", "amigos");    
    
   }
   
   
-  
-   public function buscaramigos() { //TERMINADO
+  /**
+   * Este metodo se llama cuando el usuario pulsa "Buscar"
+   * en la página de inicio. Visualiza todos los usuarios 
+   * que no tienen ninguna relacion de amistad con el usuario
+   * actual
+   * 
+   * @return void
+   */ 
+   public function buscaramigos() { 
    
 		$currentuser = $_SESSION["currentuser"];
 		
-		// find the Post object in the database
+		// Encuentra los usuarios que no tienen relacion de amistad con currentuser
 		$busquedas = $this->friendDAO->findUsuarios($currentuser);
 		
-		if ($busquedas == NULL) {
-		  throw new Exception("No hay usuarios");
-		}
-		
-		// put the Post object to the view
+		// Guarda en la variable busquedas el contenido de $busquedas para visualizarlo en la vista
 		$this->view->setVariable("busquedas", $busquedas);
 	   
+	    //renderiza la vista (view/friends/buscar amigos)
 		$this->view->render("friends", "buscaramigos");    
    
   }
   
-   public function solicitudes() { //TERMINADO
+  
+  /**
+   * Este metodo se llama cuando el usuario pulsa "Solicitudes"
+   * en la pagina de inicio. Se muestran las solicitudes de amistad. 
+   * 
+   * @return void
+   */ 
+   public function solicitudes() { 
    
 		$currentuser = $_SESSION["currentuser"];
 		
-		// find the Post object in the database
+		// Encuentra las solicitudes de amistad para currentuser
 		$solicitudes = $this->friendDAO->findSolicitudes($currentuser);
 		
-		if ($solicitudes == NULL) {
-		  throw new Exception("No hay solicitudes para: ".$currentuser->getName());
-		}
-		
-		// put the Post object to the view
+		// Guarda en la variable solicitudes el contenido de $solicitudes para mostrarlo en la vista
 		$this->view->setVariable("solicitudes", $solicitudes);
    
-   
+		// renderiza la vista(view/friends/solicitudes)
 		$this->view->render("friends", "solicitudes");    
    
   }

@@ -39,7 +39,6 @@ class BaseController {
 	  //ya que al hacer el login se introdujo todo el usuario en la sesion
       $this->currentUser = $_SESSION["currentuser"];   
 	  
-      //Que se guarda en currentusername? el email o todo el usuario? si solo es el email xke funciona el dafeult?????????????
       $this->view->setVariable("currentusername", $this->currentUser);
 	  
     }     
