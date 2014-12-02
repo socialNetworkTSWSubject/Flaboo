@@ -5,19 +5,17 @@ require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 require_once(__DIR__."/../controller/BaseController.php");
 /**
- * Class UsersController
+ * Clase UsersController
  * 
- * Controller to login, logout and user registration
- * 
- * @author lipido <lipido@gmail.com>
+ * @author adrian <adricelixfernandez@gmail.com>
+ * @author jenifer <jeni093@gmail.com>
  */
 class UsersController extends BaseController {
   
   /**
-   * Reference to the UserDAO to interact
-   * with the database
+   * Referencia a UserDAO para acceder a la base de datos
    * 
-   * @var UserMapper
+   * @var userDAO
    */  
   private $userDAO;    
   
@@ -30,33 +28,16 @@ class UsersController extends BaseController {
     // menu is displayed
     //   
   }
+  
+  
  /**
-   * Action to login
+   * Este metodo se llama cuando el usuario pulsa "Aceptar"
+   * en las peticiones de amistad. 
    * 
-   * Logins a user checking its creedentials agains
-   * the database   
-   * 
-   * When called via GET, it shows the login form
-   * When called via POST, it tries to login
-   * 
-   * The expected HTTP parameters are:
-   * <ul>
-   * <li>login: The username (via HTTP POST)</li>
-   * <li>passwd: The password (via HTTP POST)</li>      
-   * </ul>
-   *
-   * The views are:
-   * <ul>
-   * <li>posts/login: If this action is reached via HTTP GET (via include)</li>
-   * <li>posts/index: If login succeds (via redirect)</li>   
-   * <li>users/login: If validation fails (via include). Includes these view variables:</li>
-   * <ul>   
-   *  <li>errors: Array including validation errors</li>   
-   * </ul>   
-   * </ul>
-   * 
+   * @var UserMapper
    * @return void
-   */
+   * @throws Exception If no such post of the given id is found
+   */ 
   public function login() {
     if (isset($_POST["email"])){ // reaching via HTTP Post...
       //process login form    
