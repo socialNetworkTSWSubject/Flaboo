@@ -39,14 +39,16 @@ class FriendsController extends BaseController {
    */ 
    public function aceptarAmistad() {
    
-		$currentuser = $_SESSION["currentuser"];
+		if(!isset($this->currentUser)){
+			throw new Exception("No iniciaste sesion. Vete a login");
+		}
 		
 		if (isset($_GET["id"])){
 			// con esto coge el id del usuario al que acepta la solicitud
 			$friendEmail=$_GET["id"];
 			
 			//Encuentra la relacion de amistad de esta peticion en concreto
-			$friendship = $this->friendDAO->findPeticion($currentuser, $friendEmail);
+			$friendship = $this->friendDAO->findPeticion($this->currentUser, $friendEmail);
 			
 			//Si no existe la petición surge una excepción
 			if ($friendship == NULL) {
@@ -75,14 +77,16 @@ class FriendsController extends BaseController {
    */ 
    public function rechazarAmistad() { 
 	
-		$currentuser = $_SESSION["currentuser"];
+		if(!isset($this->currentUser)){
+			throw new Exception("No iniciaste sesion. Vete a login");
+		}
 		
 		if (isset($_GET["id"])){
 			//Cone esto coge el id del usuario al que rechaza la solicitud
 			$friendEmail=$_GET["id"];
 			
 			//Encuentra la peticion de amistad en la tabla friends
-			$friendship = $this->friendDAO->findPeticion($currentuser, $friendEmail);
+			$friendship = $this->friendDAO->findPeticion($this->currentUser, $friendEmail);
 			
 			//Si no existe la peticion salta una excepcion
 			if ($friendship == NULL) {
@@ -110,14 +114,16 @@ class FriendsController extends BaseController {
    */ 
     public function solicitarAmistad() { 
 	
-		$currentuser = $_SESSION["currentuser"];
+		if(!isset($this->currentUser)){
+			throw new Exception("No iniciaste sesion. Vete a login");
+		}
 		
 		if (isset($_GET["id"])){
 			//Recupera el id del usuario al que pide amistad
 			$friendEmail=$_GET["id"];
 			
 			//Guarda la relacion en la base de datos con isFriend=0
-			$this->friendDAO->saveFriedship($currentuser, $friendEmail);
+			$this->friendDAO->saveFriedship($this->currentUser, $friendEmail);
 			
 			//redirige al metodo buscaramigos del controlador friends
 			$this->view->redirect("friends", "buscaramigos");
@@ -138,14 +144,16 @@ class FriendsController extends BaseController {
    */ 
    public function eliminarAmigo(){
    
-		$currentuser = $_SESSION["currentuser"];
+		if(!isset($this->currentUser)){
+			throw new Exception("No iniciaste sesion. Vete a login");
+		}
 		
 		if (isset($_GET["id"])){
 			//Recupera el id del usuario que elimina
 			$friendEmail=$_GET["id"];
 			
 			//encuentra la relacion de amistad entre los usuarios currentuser y friendEmail
-			$friendship = $this->friendDAO->findFriendship($currentuser, $friendEmail);
+			$friendship = $this->friendDAO->findFriendship($this->currentUser, $friendEmail);
 			
 			//Si no existe relación salta una excepcion
 			if ($friendship == NULL) {
@@ -172,10 +180,12 @@ class FriendsController extends BaseController {
    */ 
   public function amigos() { 
   
-    $currentuser = $_SESSION["currentuser"];
+    if(!isset($this->currentUser)){
+		throw new Exception("No iniciaste sesion. Vete a login");
+	}
     
     // find the Post object in the database
-    $friends = $this->friendDAO->findFriends($currentuser);
+    $friends = $this->friendDAO->findFriends($this->currentUser);
     
     // Guarda en la variable friends el objeto $friends para visualizarlo en la vista
     $this->view->setVariable("friends", $friends);
@@ -196,10 +206,12 @@ class FriendsController extends BaseController {
    */ 
    public function buscaramigos() { 
    
-		$currentuser = $_SESSION["currentuser"];
+		if(!isset($this->currentUser)){
+			throw new Exception("No iniciaste sesion. Vete a login");
+		}
 		
 		// Encuentra los usuarios que no tienen relacion de amistad con currentuser
-		$busquedas = $this->friendDAO->findUsuarios($currentuser);
+		$busquedas = $this->friendDAO->findUsuarios($this->currentUser);
 		
 		// Guarda en la variable busquedas el contenido de $busquedas para visualizarlo en la vista
 		$this->view->setVariable("busquedas", $busquedas);
@@ -218,10 +230,12 @@ class FriendsController extends BaseController {
    */ 
    public function solicitudes() { 
    
-		$currentuser = $_SESSION["currentuser"];
+		if(!isset($this->currentUser)){
+			throw new Exception("No iniciaste sesion. Vete a login");
+		}
 		
 		// Encuentra las solicitudes de amistad para currentuser
-		$solicitudes = $this->friendDAO->findSolicitudes($currentuser);
+		$solicitudes = $this->friendDAO->findSolicitudes($this->currentUser);
 		
 		// Guarda en la variable solicitudes el contenido de $solicitudes para mostrarlo en la vista
 		$this->view->setVariable("solicitudes", $solicitudes);
