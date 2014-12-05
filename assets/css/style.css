@@ -255,8 +255,8 @@ footer{
 }
 
 #busqueda {
-	margin-top:55px;
-	margin-left:510px;
+	margin-top:10px;
+	margin-left:810px;
 }
 
 .botonmegusta {
@@ -299,6 +299,7 @@ footer{
     padding-left: 8px;
 	padding-right: 8px;
 	padding-top: 5px;
+	margin-top: 50px;
 	padding-bottom: 5px;
     font-size: 15px;
     font-weight: bold;
@@ -330,6 +331,18 @@ footer{
 	text-align:center;
 	font-weight: bold;
 	
+ }
+ 
+ .idioma{
+	background-color: #707070;
+	color:#ffffff;
+	margin-top:10px;
+	margin-left:10px;
+ }
+ 
+ .idiomaL{
+	float:left;
+	margin-right:6px;
  }
 
 .menusup{

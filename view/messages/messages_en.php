@@ -8,8 +8,6 @@
     "PUBLICACIONES" => "PUBLICATIONS",
     "Comentado el" => "Commented on the",
     "a las" => "at",
-    "Me gusta" => "I like it",
-    "Ver mas" => "See more",
     "Amigos" => "Friends",
     "Solicitudes Amistad" => "Friend Requests",
 	"PUBLICACIONES" => "PUBLICATIONS",
@@ -28,6 +26,9 @@
 	"Registrate en" => "Register for",
 	"Registrate!" => "Register!",
     "Nombre y Apellidos:" => "Name and surname:",
-	"Contacta con nosotros!" => "Contact us"
+	"Contacta con nosotros!" => "Contact us",
+	"Nuevo Post:" => "New Post:",
+	"Me gusta" => "Like",
+	"Enviar" => "Submit"
   )
 ?>

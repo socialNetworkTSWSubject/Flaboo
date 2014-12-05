@@ -35,23 +35,34 @@ class PostsController extends BaseController {
     $this->friendDAO = New FriendDAO(); 
   }
   
+  /**
+   * Realiza un listado de todos los post cuyo autor es el usuario
+   * o un amigo del usuario.
+   * @throws Exception Si el usuario no inicio sesion
+   */
   public function viewPosts() {
  
   	if (!isset($this->currentUser)) {
   		throw new Exception("Not in session. Editing posts requires login");
   	}
 	
+	/*
 	$posts = $this->postDAO->findByAuthor($this->currentUser, $this->friendDAO->findFriends($this->currentUser));
   	
   	if ($posts == NULL) {
   		throw new Exception("no such posts");
   	}
-  	
-  	$this->view->setVariable("posts", $posts);
+  	*/
+	
+  	$this->view->setVariable("posts", $this->loadPost());
   	$this->view->render("posts","inicio");
   }
   
-  
+   /**
+   * Inserta un nuevo post en el muro del usuario actual si dicho usuario 
+   * inicio sesion previamente.
+   * @throws Exception Si no esta en sesion  
+   */
   public function addPost() {
   	if (!isset($this->currentUser)) {
   		throw new Exception("Not in session. Editing posts requires login");
@@ -80,14 +91,29 @@ class PostsController extends BaseController {
   		$this->view->setVariable("errors", $errors);
     }
   	
-    $this->view->setVariable("post", $post);
+    $this->view->setVariable("posts", $this->loadPost());
+	
+	
+	/*
+	//cargar tambien los posts...
+	$posts = $this->postDAO->findByAuthor($this->currentUser, $this->friendDAO->findFriends($this->currentUser));
+  	
+  	if ($posts == NULL) {
+  		throw new Exception("no such posts");
+  	}
+  	*/
+  	//$this->view->setVariable("posts", $posts);
+	
     $this->view->render("posts", "inicio");	
   }
   
-  
- //ADRI DEJA ESTE METODO TAL COMO ESTA PARA QUE PUEDA SEGUIR HACIENDO PRUEBAS CON EL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  public function posts() { 
-  	$this->view->render("posts", "inicio");    
+  private function loadPost(){
+	$posts = $this->postDAO->findByAuthor($this->currentUser, $this->friendDAO->findFriends($this->currentUser));
+  	
+  	if ($posts == NULL) {
+  		throw new Exception("no such posts");
+  	}
+	return $posts;
   }
- 
+  
 }

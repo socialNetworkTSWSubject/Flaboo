@@ -20,9 +20,11 @@
 		<a href="index.php"> 
 			<h1 id="logo">FlaBoo</h1>
 		</a>
-		<li>SELECCIONA EL IDIOMA QUE DESEAS:</li>
-		<li><a href="index.php?controller=language&action=change&lang=es">Español</a></li>
-		<li><a href="index.php?controller=language&action=change&lang=en">Ingles</a></li>
+		<ul class="idioma">
+			<li class="idiomaL">SELECCIONA EL IDIOMA QUE DESEAS:</li>
+			<li class="idiomaL"><a href="index.php?controller=language&action=change&lang=es">Español</a></li>
+			<li class="idiomaL"><a href="index.php?controller=language&action=change&lang=en">Ingles</a></li>
+		</ul>
 	</header>
 	<?= $view->popFlash() ?>
     <?= $view->getFragment(ViewManager::DEFAULT_FRAGMENT) ?>    

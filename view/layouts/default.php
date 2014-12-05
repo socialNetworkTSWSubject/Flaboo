@@ -26,10 +26,7 @@
 	</header>
 	
 	<nav class="menusup">
-		<form action="index.php?controller=friends&action=buscaramigos" method="post" id="busqueda">
-			<input id="botongris" type="submit" value="<?= i18n("Buscar Amigos")?>">
-			<input id="cuadrobuscar" type="text" name="name_friend">		
-		</form>
+		<a id="busqueda" href="index.php?controller=friends&action=buscaramigos"><input id="botongris" type="submit" value="<?= i18n("Buscar Amigos")?>"></a>	
 	</nav>
 	
 	<aside>
@@ -89,10 +86,11 @@
 	</div>
 	
 	<footer>
-		<ul>
-			<li>SELECCIONA EL IDIOMA QUE DESEAS:</li>
-			<li><a href="index.php?controller=language&action=change&lang=es">Español</a></li>
-			<li><a href="index.php?controller=language&action=change&lang=en">Ingles</a></li>
+		
+		<ul class="idioma">
+			<li class="idiomaL">SELECCIONA EL IDIOMA QUE DESEAS:</li>
+			<li class="idiomaL"><a href="index.php?controller=language&action=change&lang=es">Español</a></li>
+			<li class="idiomaL"><a href="index.php?controller=language&action=change&lang=en">Ingles</a></li>
 		</ul>
 	
 	</footer>

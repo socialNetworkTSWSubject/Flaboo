@@ -7,17 +7,16 @@
 ?>
 
 <div id="new_post">
-	<h1 id="nuevopost">Nuevo Post:</h1>
+	<h1 id="nuevopost"><?=i18n("Nuevo Post:")?></h1>
 	<h2 id="fecha"><?=date("m/d/y")?> </h2> 
 	<div>
 		<form action="index.php?controller=posts&action=addPost" method="post">
 			<div>
-				<textarea name="content" rows="5" cols="70">
-				
-				</textarea>
+				<textarea name="content" rows="5" cols="70"></textarea>
 			</div>
 			<div>
-				<input id="botonazul" type="submit" name="submit" value="submit">
+				<input id="botonazul" type="submit" name="submit" value="<?=i18n("Enviar")?>">
+				<br><?= isset($errors["content"])?$errors["content"]:"" ?><br>
 			</div>
 		</form>
 	</div>
@@ -31,7 +30,7 @@
 			<h2 class="nombrecomentario"><?=$post->getDate()?></h2>
 		</div>
 		<a href="index.php?controller=likes&action=addLike&id=<?=$post->getIdPost()?>">
-			<button class="botonmegusta" name="idPost">Me gusta</button>
+			<button class="botonmegusta" name="idPost"><?=i18n("Me gusta")?></button>
 		</a>
 		<h3><?=$post->getNumLikes()?></h3>
 		<p class="clearboth"><?=$post->getContent()?></p>

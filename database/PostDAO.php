@@ -69,7 +69,7 @@ class PostDAO {
 			SELECT friendEmail from friends where userEmail = 'adri@gmail.com' and isFriend='1' 
 		)
 		UNION SELECT * from post where author = ? 
-		order by datePost");
+		order by datePost DESC");
 		$stmt->execute(array($author->getEmail(),$author->getEmail()));
 		$postFriends =$stmt->fetchAll(PDO::FETCH_ASSOC);
 		

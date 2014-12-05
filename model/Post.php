@@ -158,7 +158,8 @@ class Post
 	
 	public function checkIsValidForCreate(){
 		$errors = array();
-		if(empty($this->content)){
+		
+		if(strlen($this->content)=='0'){
 			$errors["content"] = "content is mandatory";
 		}
 		if($this->author === NULL){
