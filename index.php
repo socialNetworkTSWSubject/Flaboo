@@ -8,6 +8,9 @@ define("DEFAULT_CONTROLLER", "users");
  * Default action if any action is passed in the URL
  */
 define("DEFAULT_ACTION", "login");
+
+//Define la zona horaria por defecto en la que se ejecuta la aplicacion web 
+date_default_timezone_set('Europe/Madrid');
 /**
  * Main router (single entry-point for all requests)
  * of the MVC implementation.
