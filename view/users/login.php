@@ -4,6 +4,7 @@
  require_once(__DIR__."/../../core/ViewManager.php");
  $view = ViewManager::getInstance();
  $errors = $view->getVariable("errors");
+ $view->setVariable("title", "Flaboo -- Login");
 ?>
 
 <div class="menusup">

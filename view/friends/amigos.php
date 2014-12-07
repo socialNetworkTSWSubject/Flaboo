@@ -3,6 +3,7 @@
  $view = ViewManager::getInstance();
  $errors = $view->getVariable("errors");
  $friends = $view->getVariable("friends");
+ $view->setVariable("title", "Flaboo -- Mis amigos");
 ?>
 
 <div>

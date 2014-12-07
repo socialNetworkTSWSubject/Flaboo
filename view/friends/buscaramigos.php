@@ -3,6 +3,7 @@
  $view = ViewManager::getInstance();
  $errors = $view->getVariable("errors");
  $busquedas = $view->getVariable("busquedas");
+ $view->setVariable("title", "Flaboo -- Busqueda");
 ?><div>
 	<h1 class="txtsolicitudes"><?= i18n("Usuarios")?></h1>
 </div>	

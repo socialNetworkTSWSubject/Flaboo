@@ -4,6 +4,7 @@
  $view = ViewManager::getInstance();
  $errors = $view->getVariable("errors");
  $solicitudes = $view->getVariable("solicitudes");
+ $view->setVariable("title", "Flaboo -- Solicitudes");
 ?>
 
 <div>

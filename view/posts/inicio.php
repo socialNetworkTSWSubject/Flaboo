@@ -4,6 +4,7 @@
  $view = ViewManager::getInstance();
  $posts = $view->getVariable("posts");
  $errors = $view->getVariable("errors");
+ $view->setVariable("title", "Flaboo -- Inicio");
 ?>
 
 <div id="new_post">
