@@ -29,6 +29,7 @@
 	"Contacta con nosotros!" => "Contact us",
 	"Nuevo Post:" => "New Post:",
 	"Me gusta" => "Like",
-	"Enviar" => "Submit"
+	"Enviar" => "Submit",
+	"Muro vacio" => "Empty wall"
   )
 ?>

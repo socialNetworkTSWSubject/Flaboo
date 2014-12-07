@@ -40,7 +40,7 @@
 	</div>
 	<?php endforeach; ?>
 	<?php else: ?>
-		<h1> El usuario no tiene post </h1>
+		<h1> <?=i18n("Muro vacio")?></h1>
 	<?php endif;?>
 
 
