@@ -43,6 +43,7 @@ class PostDAO {
 	/**
 	 * Carga un post segun su id
 	 * @param string $idPost
+	 * @throws PDOException si ocurre algun error en la BD
 	 * @return Post La instancia de post|NULL en caso de no existir post con ese id 
 	 */
 	public function findByIdPost($id){
@@ -59,6 +60,7 @@ class PostDAO {
 	/**
 	 * Carga todos los post cuyo autor es el usuario actual o sus amigos
 	 * @param string $idAuthor
+	 * @throws PDOException si ocurre algun error en la BD
 	 * @return Post Las instancias de post|NULL en caso de no existir post
 	 */
 	public function findByAuthor(User $author){

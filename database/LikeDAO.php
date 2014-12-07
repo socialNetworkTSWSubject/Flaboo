@@ -28,6 +28,7 @@ class LikeDAO {
 	/**
 	 * Incrementa un like en el post
 	 * @param Like $like
+	 * @throws PDOException si ocurre algun error en la BD
 	 */
 	public function addLikePost(Like $like){
 		$stmt = $this->db->prepare("INSERT INTO likes(authorLike,likePost) values(?,?)");
@@ -38,6 +39,7 @@ class LikeDAO {
 	 * Comprueba si el usuario actual hizo like en ese post
 	 * @var User $user El objecto usuario actual
 	 * @var int $idPost El id del post
+	 * @throws PDOException si ocurre algun error en la BD
 	 * @return int El numero de likes de ese post hechos por ese usuario
 	 */
 	public function isNewLike(User $user, $idPost){
@@ -49,6 +51,7 @@ class LikeDAO {
 	/**
 	 * Incrementa el numero de likes de un post
 	 * @param $idPost El id del post
+	 * @throws PDOException si ocurre algun error en la BD
 	 */
 	public function increaseNumLikes($idPost){
 		$stmt = $this->db->prepare("UPDATE post SET numLikes = numLikes+1 WHERE idPost = ?");

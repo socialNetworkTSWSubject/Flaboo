@@ -25,6 +25,7 @@ class FriendDAO {
    * Guarda la amistad en la base de datos
    * 
    * @param Friend $friend La amistad a ser guardada
+   * @throws PDOException si ocurre algun error en la BD
    * @return void
    */      
   public function save($friend) {
@@ -37,6 +38,7 @@ class FriendDAO {
    * Actualiza la variable setFriends a '1'
    * 
    * @param Friend $friendship La amistad a ser actualizada
+   * @throws PDOException si ocurre algun error en la BD
    * @return void
    */ 
   public function updateIsFriend($friendship){
@@ -48,6 +50,7 @@ class FriendDAO {
    * Borra la amistad
    * 
    * @param Friend $friendship La amistad a ser borrada
+   * @throws PDOException si ocurre algun error en la BD
    * @return void
    */ 
   public function deleteFriendship($friendship){
@@ -59,6 +62,7 @@ class FriendDAO {
    * Encuentra los amigos de currentuser
    * 
    * @param User $currentuser El usuario actual
+   * @throws PDOException si ocurre algun error en la BD
    * @return mixed Array de instancias de Friend
    */    
   public function findFriends($currentuser){ 
@@ -87,6 +91,7 @@ class FriendDAO {
    * 
    * @param User $currentuser El usuario actual
    * @param User $friendEmail El usuario de la peticion
+   * @throws PDOException si ocurre algun error en la BD
    * @return Friend instancia del objeto Friend | NULL si no encuentra la peticion de amistad
    */ 
   public function findPeticion($currentuser, $friendEmail){
@@ -112,6 +117,7 @@ class FriendDAO {
    * 
    * @param User $currentuser El usuario actual
    * @param User $friendEmail El usuario amigos
+   * @throws PDOException si ocurre algun error en la BD
    * @return Friend instancia del objeto Friend | NULL si no encuentra la peticion de amistad
    */ 
   public function findFriendship($currentuser, $friendEmail){
@@ -139,6 +145,7 @@ class FriendDAO {
    * relacion de amistad con el curretuser
    * 
    * @param User $currentuser El usuario actual
+   * @throws PDOException si ocurre algun error en la BD
    * @return mixed Array de instancias de Friend
    */     
   public function findUsuarios($currentuser){ 
@@ -168,6 +175,7 @@ class FriendDAO {
    * 
    * @param User $currentuser El usuario actual
    * @param User $friendEmail El usuario amigo
+   * @throws PDOException si ocurre algun error en la BD
    * @return mixed Array de instancias de Friend
    */
   public function saveFriedship($currentuser, $friendEmail){ 
@@ -181,6 +189,7 @@ class FriendDAO {
    * Encuentra las solicitudes de amistad que tiene el currentuser
    * 
    * @param User $currentuser El usuario actual
+   * @throws PDOException si ocurre algun error en la BD
    * @return mixed Array de instancias de Friend
    */   
   public function findSolicitudes($currentuser){ 

@@ -25,6 +25,7 @@ class UserDAO {
    * Guarda un usuario en la base de datos
    * 
    * @param User $user El usuario a ser guardado
+   * @throws PDOException si ocurre algun error en la BD
    * @return void
    */      
   public function save($user) {
@@ -37,6 +38,7 @@ class UserDAO {
    * Encuentra un usuario en la base de datos con su email.
    * 
    * @param String $useremail El email del usuario
+   * @throws PDOException si ocurre algun error en la BD
    * @return User instancia del objeto User 
    */    
   public function findByEmail($useremail){
@@ -59,6 +61,7 @@ class UserDAO {
    * Comprueba si el email ya existe en la base de datos
    * 
    * @param String $email El email del usuario
+   * @throws PDOException si ocurre algun error en la BD
    * @return boolean true si encuentra un usuario con ese email|false en caso contrario			
    */
   public function emailExists($email) {
@@ -76,6 +79,7 @@ class UserDAO {
    * 
    * @param String $email El email del usuario
    * @param String $password El email del usuario
+   * @throws PDOException si ocurre algun error en la BD
    * @return boolean true si encuentra un usuario con ese email/password|false en caso contrario	 
    */
   public function isValidUser($email, $password) {

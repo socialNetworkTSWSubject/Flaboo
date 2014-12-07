@@ -98,10 +98,6 @@ class PostsController extends BaseController {
    */ 		
   private function loadPost(){
 	$posts = $this->postDAO->findByAuthor($this->currentUser);
-  	
-  	if ($posts == NULL) {
-  		throw new Exception("no such posts");
-  	}
 	return $posts;
   }
   

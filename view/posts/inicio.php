@@ -22,8 +22,10 @@
 		</form>
 	</div>
 </div>		
-
+	
+	<?php if($posts != NULL): ?>
 	<?php foreach ($posts as $post): ?>
+
 	<div class="comentario">
 		<img  class="usercomentario" src="assets/img/userb.jpg" alt="LogOut" height="50" width="50">
 		<div class="conjunto">
@@ -36,7 +38,11 @@
 		<h3><?=$post->getNumLikes()?></h3>
 		<p class="clearboth"><?=$post->getContent()?></p>
 	</div>
-<?php endforeach; ?>
+	<?php endforeach; ?>
+	<?php else: ?>
+		<h1> El usuario no tiene post </h1>
+	<?php endif;?>
+
 
 	
 	
