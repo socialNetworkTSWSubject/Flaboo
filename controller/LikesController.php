@@ -1,8 +1,6 @@
 <?php
 //file /controller/LikesController.php
 
-require_once(__DIR__."/../model/User.php");
-require_once(__DIR__."/../model/Post.php");
 require_once(__DIR__."/../model/Like.php");
 require_once(__DIR__."/../database/PostDAO.php");
 require_once(__DIR__."/../database/LikeDAO.php");

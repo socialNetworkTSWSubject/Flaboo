@@ -1,6 +1,5 @@
 <?php
 require_once(__DIR__."/../database/PostDAO.php");
-require_once(__DIR__."/../database/FriendDAO.php");
 require_once(__DIR__."/../model/Post.php");
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
@@ -22,17 +21,10 @@ class PostsController extends BaseController {
    */  
   private $postDAO; 
   
-  /**
-   * Referencia a la clase PostDAO que interactua con la BD
-   * @var FriendDAO
-   */
-  private $friendDAO;
-  
   public function __construct() {    
     parent::__construct();
     
     $this->postDAO = new PostDAO();
-    $this->friendDAO = New FriendDAO(); 
   }
   
   /**
