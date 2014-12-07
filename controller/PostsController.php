@@ -1,11 +1,12 @@
 <?php
 require_once(__DIR__."/../database/PostDAO.php");
 require_once(__DIR__."/../model/Post.php");
+require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 require_once(__DIR__."/../controller/BaseController.php");
 /**
- * Class UsersController
+ * Class PostController
  * 
  * Controlador relativo a los post cuyas funcionalidades 
  * son mostrar y añadir nuevos post
