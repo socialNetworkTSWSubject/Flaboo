@@ -34,7 +34,6 @@
 			<img id="fotouser" src="assets/img/usera.jpg" alt="LogOut" height="190" width="150">
 		</div>
 		<div id="asidenombre">
-			<!--porque funciona si en basecontroller solo guarda el email????????????????????????-->
 			<p><?=$currentuser->getEmail()?></p>
 			<p><?=$currentuser->getName()?></p>
 		</div>

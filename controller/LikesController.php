@@ -56,10 +56,12 @@ class LikesController extends BaseController{
 			$idPost = $_GET["id"];
 			$post = $this->postDAO->findByIdPost($idPost);
 			
+			//Si no existe un post con ese id lanza una excepcion
 			if ($post == NULL) {
 				throw new Exception("No such post with id: ".$idPost);
 			}
 			
+			//Si el usuario ya hizo like en el post lanza una excepcion
 			if($this->likeDAO->isNewLike($this->currentUser,$idPost) > 0){
 				throw new Exception("This user already made like in this post");
 			}

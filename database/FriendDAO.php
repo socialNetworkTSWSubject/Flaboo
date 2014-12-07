@@ -11,8 +11,8 @@ require_once(__DIR__."/../core/PDOConnection.php");
  */
 class FriendDAO {
   /**
-   * Referencia a la nonexión PDO
-   * @var db
+   * Referencia a la conexión PDO
+   * @var PDO
    */
   private $db;
   
@@ -59,7 +59,7 @@ class FriendDAO {
    * Encuentra los amigos de currentuser
    * 
    * @param User $currentuser El usuario actual
-   * @return array()
+   * @return mixed Array de instancias de Friend
    */    
   public function findFriends($currentuser){ 
     $stmt = $this->db->prepare("SELECT * FROM users where email in 
@@ -87,7 +87,7 @@ class FriendDAO {
    * 
    * @param User $currentuser El usuario actual
    * @param User $friendEmail El usuario de la peticion
-   * @return Friend
+   * @return Friend instancia del objeto Friend | NULL si no encuentra la peticion de amistad
    */ 
   public function findPeticion($currentuser, $friendEmail){
  
@@ -112,7 +112,7 @@ class FriendDAO {
    * 
    * @param User $currentuser El usuario actual
    * @param User $friendEmail El usuario amigos
-   * @return Friend
+   * @return Friend instancia del objeto Friend | NULL si no encuentra la peticion de amistad
    */ 
   public function findFriendship($currentuser, $friendEmail){
  
@@ -139,7 +139,7 @@ class FriendDAO {
    * relacion de amistad con el curretuser
    * 
    * @param User $currentuser El usuario actual
-   * @return array de Friends
+   * @return mixed Array de instancias de Friend
    */     
   public function findUsuarios($currentuser){ 
   
@@ -150,7 +150,6 @@ class FriendDAO {
 									SELECT friendEmail from friends where userEmail = ?
 								) and email!=?"	);
     $stmt->execute(array($currentuser->getEmail(),$currentuser->getEmail(),$currentuser->getEmail()));
-    //$user = $stmt->fetch(PDO::FETCH_ASSOC);
 	$friends_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
 	$friends=array();
@@ -169,7 +168,7 @@ class FriendDAO {
    * 
    * @param User $currentuser El usuario actual
    * @param User $friendEmail El usuario amigo
-   * @return array de Friends
+   * @return mixed Array de instancias de Friend
    */
   public function saveFriedship($currentuser, $friendEmail){ 
   
@@ -182,13 +181,12 @@ class FriendDAO {
    * Encuentra las solicitudes de amistad que tiene el currentuser
    * 
    * @param User $currentuser El usuario actual
-   * @return array de Friends
+   * @return mixed Array de instancias de Friend
    */   
   public function findSolicitudes($currentuser){ 
  
-    $stmt = $this->db->prepare("SELECT * FROM friends, users WHERE friends.friendEmail=? and users.email=friends.userEmail and friends.isFriend='0' ");//como poner el true ?????????????????
+    $stmt = $this->db->prepare("SELECT * FROM friends, users WHERE friends.friendEmail=? and users.email=friends.userEmail and friends.isFriend='0' ");
     $stmt->execute(array($currentuser->getEmail()));
-    //$user = $stmt->fetch(PDO::FETCH_ASSOC);
 	$solicitudes_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
 	$solicitudes=array();
@@ -200,9 +198,5 @@ class FriendDAO {
     return $solicitudes;
      
   }
-  
-  
-  
-  
- 
+
 }

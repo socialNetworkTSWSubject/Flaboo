@@ -1,6 +1,13 @@
 <?php
 // file: /core/PDOConnection.php
 
+/**
+ * Clase que nos permite realizar la conexion con la base de datos
+ * 
+ * @author jenifer <jeny-093@hotmail.com>
+ * @author adrian <adricelixfernandez@gmail.com>
+ */
+
 class PDOConnection {
   private static $dbhost = "localhost";
   private static $dbname = "flaboo";

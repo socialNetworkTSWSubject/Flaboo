@@ -35,21 +35,10 @@ class LikeDAO {
 	}
 	
 	/**
-	 * Cuenta el numero de likes del post 
-	 * @param int $idPost El id del post
-	 * @return int like El numero de likes del post
-	 */
-	public function countLikes($idPost){
-		$stmt = $this->db->prepare("SELECT count (*) FROM likes WHERE likePost = ?");
-		$stmt->execute(array($idPost));
-		return $stmt->rowCount();
-	}
-	
-	/**
 	 * Comprueba si el usuario actual hizo like en ese post
 	 * @var User $user El objecto usuario actual
 	 * @var int $idPost El id del post
-	 * @return El numero de likes de ese post hechos por ese usuario
+	 * @return int El numero de likes de ese post hechos por ese usuario
 	 */
 	public function isNewLike(User $user, $idPost){
 		$stmt = $this->db->prepare("SELECT * FROM likes WHERE authorLike = ? and likePost = ?");
@@ -59,7 +48,7 @@ class LikeDAO {
 	
 	/**
 	 * Incrementa el numero de likes de un post
-	 * @var idPost El id del post
+	 * @param $idPost El id del post
 	 */
 	public function increaseNumLikes($idPost){
 		$stmt = $this->db->prepare("UPDATE post SET numLikes = numLikes+1 WHERE idPost = ?");

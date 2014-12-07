@@ -46,14 +46,7 @@ class PostsController extends BaseController {
   		throw new Exception("Not in session. Editing posts requires login");
   	}
 	
-	/*
-	$posts = $this->postDAO->findByAuthor($this->currentUser, $this->friendDAO->findFriends($this->currentUser));
-  	
-  	if ($posts == NULL) {
-  		throw new Exception("no such posts");
-  	}
-  	*/
-	
+	//Carga los post en la vista y la renderiza
   	$this->view->setVariable("posts", $this->loadPost());
   	$this->view->render("posts","inicio");
   }
@@ -91,24 +84,20 @@ class PostsController extends BaseController {
   		$this->view->setVariable("errors", $errors);
     }
   	
+	//Carga los post en la vista y la renderiza
     $this->view->setVariable("posts", $this->loadPost());
-	
-	
-	/*
-	//cargar tambien los posts...
-	$posts = $this->postDAO->findByAuthor($this->currentUser, $this->friendDAO->findFriends($this->currentUser));
-  	
-  	if ($posts == NULL) {
-  		throw new Exception("no such posts");
-  	}
-  	*/
-  	//$this->view->setVariable("posts", $posts);
-	
     $this->view->render("posts", "inicio");	
   }
   
+  /**
+   * Metodo privado que es llamada por las acciones viewPost() y addPost() del controlador de posts.
+   * Carga en memoria los post segun los criterios establecidos en el metodo viewPost().
+   *
+   * @throws Exception si no encuentra ningun post
+   * @return mixed Array de las instancias Post 
+   */ 		
   private function loadPost(){
-	$posts = $this->postDAO->findByAuthor($this->currentUser, $this->friendDAO->findFriends($this->currentUser));
+	$posts = $this->postDAO->findByAuthor($this->currentUser);
   	
   	if ($posts == NULL) {
   		throw new Exception("no such posts");

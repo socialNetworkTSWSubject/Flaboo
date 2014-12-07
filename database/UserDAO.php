@@ -37,7 +37,7 @@ class UserDAO {
    * Encuentra un usuario en la base de datos con su email.
    * 
    * @param String $useremail El email del usuario
-   * @return Friend 
+   * @return User instancia del objeto User 
    */    
   public function findByEmail($useremail){
     $stmt = $this->db->prepare("SELECT * FROM users WHERE email=?");
@@ -59,7 +59,7 @@ class UserDAO {
    * Comprueba si el email ya existe en la base de datos
    * 
    * @param String $email El email del usuario
-   * @return Boolean 
+   * @return boolean true si encuentra un usuario con ese email|false en caso contrario			
    */
   public function emailExists($email) {
     $stmt = $this->db->prepare("SELECT count(email) FROM users where email=?");
@@ -76,7 +76,7 @@ class UserDAO {
    * 
    * @param String $email El email del usuario
    * @param String $password El email del usuario
-   * @return Boolean 
+   * @return boolean true si encuentra un usuario con ese email/password|false en caso contrario	 
    */
   public function isValidUser($email, $password) {
     $stmt = $this->db->prepare("SELECT count(email) FROM users where email=? and password=?");

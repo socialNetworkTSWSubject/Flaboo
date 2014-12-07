@@ -43,7 +43,7 @@ class PostDAO {
 	/**
 	 * Carga un post segun su id
 	 * @param string $idPost
-	 * @return Post Las instancia de post|NULL en caso de no existir post con ese id 
+	 * @return Post La instancia de post|NULL en caso de no existir post con ese id 
 	 */
 	public function findByIdPost($id){
 		$stmt = $this->db->prepare("SELECT * FROM post WHERE idPost = ?");
@@ -66,11 +66,11 @@ class PostDAO {
 		( 
 			SELECT userEmail from friends where friendEmail = ? and isFriend='1' 
 			UNION 
-			SELECT friendEmail from friends where userEmail = 'adri@gmail.com' and isFriend='1' 
+			SELECT friendEmail from friends where userEmail = ? and isFriend='1' 
 		)
 		UNION SELECT * from post where author = ? 
 		order by datePost DESC");
-		$stmt->execute(array($author->getEmail(),$author->getEmail()));
+		$stmt->execute(array($author->getEmail(),$author->getEmail(),$author->getEmail()));
 		$postFriends =$stmt->fetchAll(PDO::FETCH_ASSOC);
 		
 		
