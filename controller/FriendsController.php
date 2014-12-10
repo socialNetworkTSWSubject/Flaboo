@@ -186,7 +186,7 @@ class FriendsController extends BaseController {
     
     // find the Post object in the database
     $friends = $this->friendDAO->findFriends($this->currentUser);
-    
+	
     // Guarda en la variable friends el objeto $friends para visualizarlo en la vista
     $this->view->setVariable("friends", $friends);
   

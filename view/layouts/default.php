@@ -4,7 +4,7 @@
  require_once(__DIR__."/../../core/ViewManager.php");
  $view = ViewManager::getInstance();
  $currentuser = $view->getVariable("currentusername");
- 
+ $numSolicitudes = $view->getVariable("numSolicitudes");
 ?><!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
@@ -79,7 +79,7 @@
 				<div>
 					<a href="index.php?controller=friends&action=solicitudes"><img src="assets/img/solicitudes.png" alt="Solicitudes de amistad" height="60" width="60"></a>
 				</div>
-				<div class="letraderech"><?= i18n("Solicitudes Amistad")?></div>
+				<div class="letraderech"><?= i18n("Solicitudes Amistad")?>(<?=$numSolicitudes?>)</div>
 			</li>
 		</ul>
 	</div>

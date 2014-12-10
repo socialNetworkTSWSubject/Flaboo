@@ -207,5 +207,14 @@ class FriendDAO {
     return $solicitudes;
      
   }
+  
+  
+  public function getNumSolicitudes($currentuserEmail){
+	$stmt = $this->db->prepare("SELECT count(*) FROM friends WHERE friends.friendEmail=? and friends.isFriend='0' ");
+    $stmt->execute(array($currentuserEmail));
+	
+    return $stmt->fetchColumn();
+	
+  }
 
 }

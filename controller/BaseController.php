@@ -1,8 +1,10 @@
 <?php
 //file: controller/BaseController.php
+require_once(__DIR__."/../model/Friend.php");
+require_once(__DIR__."/../database/FriendDAO.php");
+require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
-require_once(__DIR__."/../model/User.php");
 /**
  * Class BaseController
  *
@@ -18,6 +20,7 @@ class BaseController {
    * @var ViewManager
    */
   protected $view;
+  private $friendDAO; 
   
   /**
    * Instancia del usuario actual
@@ -32,14 +35,22 @@ class BaseController {
     if (session_status() == PHP_SESSION_NONE) {      
 		session_start();
     }
-    
+    //inicializa la variable
+    $this->friendDAO = new FriendDAO();
+	
     if(isset($_SESSION["currentuser"])) {
-     
+	
 	  //En la sesion de currentuser se encuentra todo el usuario 
 	  //ya que al hacer el login se introdujo todo el usuario en la sesion
       $this->currentUser = $_SESSION["currentuser"];   
 	  
       $this->view->setVariable("currentusername", $this->currentUser);
+	  
+	  //consigue el numero total de solicitudes de amistad
+	  $numSolicitudes = $this->friendDAO->getNumSolicitudes($this->currentUser->getEmail());
+	
+	  //Carga el num solicitudes en la vista
+	  $this->view->setVariable("numSolicitudes", $numSolicitudes);
 	  
     }     
   }
