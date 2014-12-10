@@ -36,6 +36,16 @@ class LikeDAO {
 	}
 	
 	/**
+	 * Decrementa un like en el post
+	 * @param Like $like
+	 * @throws PDOException si ocurre algun error en la BD
+	 */
+	public function removeLikePost(Like $like){
+		$stmt = $this->db->prepare("DELETE FROM likes WHERE authorLike=? and likePost=?");
+		$stmt->execute(array($like->getAuthor(),$like->getPost()->getIdPost()));
+	}
+	
+	/**
 	 * Comprueba si el usuario actual hizo like en ese post
 	 * @var User $user El objecto usuario actual
 	 * @var int $idPost El id del post
@@ -55,6 +65,16 @@ class LikeDAO {
 	 */
 	public function increaseNumLikes($idPost){
 		$stmt = $this->db->prepare("UPDATE post SET numLikes = numLikes+1 WHERE idPost = ?");
+		$stmt->execute(array($idPost));
+	}
+	
+	/**
+	 * Decrementa el numero de likes de un post
+	 * @param $idPost El id del post
+	 * @throws PDOException si ocurre algun error en la BD
+	 */
+	public function decreaseNumLikes($idPost){
+		$stmt = $this->db->prepare("UPDATE post SET numLikes = numLikes-1 WHERE idPost = ?");
 		$stmt->execute(array($idPost));
 	}
 	

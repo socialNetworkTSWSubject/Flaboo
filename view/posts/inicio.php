@@ -35,7 +35,10 @@
 		<a href="index.php?controller=likes&action=addLike&id=<?=$post->getIdPost()?>">
 			<button class="botonmegusta" name="idPost"><?=i18n("Me gusta")?></button>
 		</a>
-		<h3><?=$post->getNumLikes()?></h3>
+		<h3 class="likes"><?=$post->getNumLikes()?></h3>
+		<a href="index.php?controller=likes&action=removeLike&id=<?=$post->getIdPost()?>">
+			<button class="botonmegusta" name="idPost"><?=i18n("Ya no me gusta")?></button>
+		</a>
 		<p class="clearboth"><?=$post->getContent()?></p>
 	</div>
 	<?php endforeach; ?>

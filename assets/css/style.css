@@ -278,6 +278,13 @@ footer{
 	border:3px outset  #5f8dd3;
 }
 
+.likes{
+	font-size:15px;
+	float:left;
+	margin-top:5px;
+	margin-left:10px;
+}
+
 #botonazul {
 	text-align: center;
     padding-left: 15px;

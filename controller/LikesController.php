@@ -85,5 +85,55 @@ class LikesController extends BaseController{
 
 	}
 	
+	/**
+	 * Metodo del controlador Likes cuya funcionalidad es eliminar un like en un
+	 * post. Verifica que el usuario haya iniciado sesion, que el post existe y
+	 * que el usuario no ha hecho like previamente sobre ese post.
+	 *
+	 * @return void
+	 */
+	public function removeLike(){
+		if (!isset($this->currentUser)) {
+			throw new Exception("Not in session. Editing posts requires login");
+		}
+		
+		if (isset($_GET["id"])) { 
+			
+			// Get the Post object from the database
+			$idPost = $_GET["id"];
+			$post = $this->postDAO->findByIdPost($idPost);
+			
+			//Si no existe un post con ese id lanza una excepcion
+			if ($post == NULL) {
+				throw new Exception("No such post with id: ".$idPost);
+			}
+			
+			//Si el usuario ya hizo like en el post lanza una excepcion
+			if($this->likeDAO->isNewLike($this->currentUser,$idPost) > 0){
+				
+				//Create the Like Object
+				$like = new Like($this->currentUser->getEmail(),$post);
+				
+				try {
+					$this->likeDAO->removeLikePost($like);
+					$this->likeDAO->decreaseNumLikes($idPost);
+					$this->view->redirect("posts", "viewPosts");
+				} catch (ValidationException $ex){
+					$errors = $ex->getErrors();
+				
+					$this->view->setVariable("like", $like, true);
+					$this->view->setVariable("errors", $errors, true);
+						
+					$this->view->redirect("posts", "viewPosts");
+				}
+			}else{
+				throw new Exception("Este usuario no hizo like en el post todavia");
+			}
+		} else {
+			throw new Exception("No such post id");
+		}
+
+	}
+	
 }
 ?>
