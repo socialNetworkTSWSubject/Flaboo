@@ -13,7 +13,7 @@ USE `FLABOO`;
 CREATE TABLE IF NOT EXISTS `USERS` (
   `email` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Email del usuario, unico (ie, no puede haber dos usuarios con el mismo email)',
   `password` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Password del usuario. No puede ser nula',
-  `name` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Nombre y apellidos del usuario. No puede ser nulo.',
+  `name` varchar(60) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Nombre y apellidos del usuario. No puede ser nulo.', 
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de usuarios';
 
@@ -41,12 +41,24 @@ CREATE TABLE IF NOT EXISTS `FRIENDS` (
 -- creacion de la tabla LIKES
 CREATE TABLE IF NOT EXISTS `LIKES` (
 	`authorLike` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'email del usuario que hizo like en el post', 
-	`likePost` int (9) NOT NULL COMMENT 'id del POST en el que se hizo like',
+	`likePost` int (9) NOT NULL COMMENT 'id del post en el que se hizo like',
 	PRIMARY KEY (`authorLike`,`likePost`),
 	FOREIGN KEY (`authorLike`) REFERENCES USERS(email),
 	FOREIGN KEY (`likePost`) REFERENCES POST(idPost)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de likes';	
 
+-- creacion de la tabla COMMENTS
+CREATE TABLE IF NOT EXISTS `COMMENTS` (
+	`idComment` INT(5) NOT NULL AUTO_INCREMENT COMMENT 'id del comentario, unico y auto incremental',
+	`dateComment` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha y hora en la que es creado el comentario, no puede ser nulo',
+	`content` text COLLATE utf8_spanish_ci NOT NULL COMMENT 'Contenido del post. No puede ser nulo.',	
+	`numLikes` int(4) DEFAULT '0' COMMENT 'Numero de likes que tiene el comentario, 0 por defecto',
+	`author` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'email del usuario que hizo like en el comentario',
+	`idPost` int (9) NOT NULL COMMENT 'id del post en el que se hizo like',
+	PRIMARY KEY (`idComment`),
+	FOREIGN KEY (`author`) REFERENCES USERS(email),
+	FOREIGN KEY (`idPost`) REFERENCES POST(idPost)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de posts' AUTO_INCREMENT=1;
 
 -- insercion de datos de ejemplo
 INSERT INTO `USERS` (`email`, `password`, `name`) VALUES
