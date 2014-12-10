@@ -115,5 +115,27 @@ class User {
       if (sizeof($errors)>0){
 		throw new ValidationException($errors, "El usuario no es valido");
       }
-  } 
+  }
+
+
+   /**
+   * Comprueba si el usuario actual es valido para 
+   * ser actualizado en la base de datos
+   * 
+   * @throws ValidationException si no es valido
+   * 
+   * @return void
+   */  
+  public function checkIsValidForUpdate($password2) {
+      $errors = array();
+      if (strlen($this->password) < 4) {
+		$errors["password"] = "La contraseña debe tener por lo menos 4 caracteres";	
+      }
+	  if($this->password != $password2) {
+		$errors["password2"] = "Las contraseñas no son iguales";	
+	  }
+      if (sizeof($errors)>0){
+		throw new ValidationException($errors, "El usuario no es valido");
+      }
+  }
 }

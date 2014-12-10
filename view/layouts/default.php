@@ -26,7 +26,7 @@
 	</header>
 	
 	<nav class="menusup">
-		<a id="busqueda" href="index.php?controller=friends&action=buscaramigos"><input id="botongris" type="submit" value="<?= i18n("Buscar Amigos")?>"></a>	
+		<a id="busqueda" href="index.php?controller=friends&action=buscaramigos"><input class="botongris" type="submit" value="<?= i18n("Buscar Amigos")?>"></a>	
 	</nav>
 	
 	<aside>
@@ -34,6 +34,7 @@
 			<img id="fotouser" src="assets/img/usera.jpg" alt="LogOut" height="190" width="150">
 		</div>
 		<div id="asidenombre">
+			<center><a href="index.php?controller=users&action=modificarContrasena"><input type="submit" value="<?= i18n("Modificar contraseña")?>"></a></center>
 			<p><?=$currentuser->getEmail()?></p>
 			<p><?=$currentuser->getName()?></p>
 		</div>

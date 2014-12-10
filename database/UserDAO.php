@@ -90,4 +90,15 @@ class UserDAO {
       return true;        
     }
   }
+  
+  /**
+   * Actualiza la contraseña del usuario
+   * 
+   * @param String $user El usuario
+   * @throws PDOException si ocurre algun error en la BD	 
+   */
+  public function updatePassword($user){
+     $stmt = $this->db->prepare("UPDATE users SET password=? WHERE email=?");
+	 $stmt->execute(array($user->getPassword(), $user->getEmail()));
+  }
 }

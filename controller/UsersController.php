@@ -118,6 +118,47 @@ class UsersController extends BaseController {
 	
   }
   
+   /**
+   * Este metodo se llama cuando el usuario quiere modificar su contraseña
+   * 
+   * @return void
+   */ 
+  public function modificarContrasena() {
+	
+	if (!isset($this->currentUser)) {
+  		throw new Exception("Not in session. Editing posts requires login");
+  	}
+  
+	$user = new User();
+    
+    if (isset($_POST["password"])){ 
+      
+      // Guarda los datos introducidos por POST en el objeto
+      $user->setEmail($this->currentUser->getEmail());
+      $user->setPassword($_POST["password"]);
+      
+      try{
+		  //mira si los datos son correctos y si no lo son lanza excepcion
+		  $user->checkIsValidForUpdate($_POST["password2"]);
+		  
+		  // Guarda el usuario en la base de datos
+		  $this->userDAO->updatePassword($user);
+		  
+		  //Redirige al metodo login del controlador de usuarios
+		  $this->view->redirect("posts", "viewPosts");
+		
+      }catch(ValidationException $ex) {
+		// Get the errors array inside the exepction...
+		$errors = $ex->getErrors();
+		// And put it to the view as "errors" variable
+		$this->view->setVariable("errors", $errors);
+      }
+    }
+	// renderiza la vista (/view/users/modificar.php)
+    $this->view->render("users", "modificar"); 
+   
+  }
+  
   
  /**
    * Este metodo se llama cuando el usuario quiere cerrar sesion 
