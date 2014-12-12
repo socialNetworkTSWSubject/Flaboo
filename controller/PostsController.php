@@ -44,6 +44,30 @@ class PostsController extends BaseController {
   	$this->view->render("posts","inicio");
   }
   
+  /**
+   * Realiza un listado de todos los post cuyo autor es el amigo
+   * del usuario.
+   * @throws Exception Si el usuario no inicio sesion
+   */
+  public function perfil() {
+ 
+  	if (!isset($this->currentUser)) {
+  		throw new Exception("Not in session. Editing posts requires login");
+  	}
+	if (isset($_GET["id"])){
+	
+		// con esto coge el id del usuario del que se quieren ver los posts
+		$userEmail=$_GET["id"];
+		
+		$posts = $this->postDAO->findPostsFriend($userEmail);
+		
+		//Carga los post en la vista y la renderiza
+		$this->view->setVariable("posts", $posts);
+		$this->view->setVariable("userEmail", $userEmail);
+	}
+  	$this->view->render("posts","perfilAmigo");
+  }
+  
    /**
    * Inserta un nuevo post en el muro del usuario actual si dicho usuario 
    * inicio sesion previamente.

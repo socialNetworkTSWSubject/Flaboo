@@ -88,6 +88,31 @@ class PostDAO {
 			return $array_post;
 		} else return null;
 	}
+	
+	
+	/**
+	 * Carga todos los post cuyo autor es el amigo del usuario
+	 * @param string $idAuthor
+	 * @throws PDOException si ocurre algun error en la BD
+	 * @return Post Las instancias de post|NULL en caso de no existir post
+	 */
+	public function findPostsFriend($userEmail){
+		$stmt = $this->db->prepare("SELECT * FROM post where author=?");
+		$stmt->execute(array($userEmail));
+		$posts =$stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		$array_post = array();
+		if(sizeof($posts)>0){
+			foreach($posts as $post) {
+				array_push($array_post, new Post($post["idPost"], $post["datePost"], $post["content"],
+					$post["numLikes"], $post["author"]));
+			}
+		}
+		
+		if(!empty($array_post)){
+			return $array_post;
+		} else return null;
+	}
 }
 ?>
 	
