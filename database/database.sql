@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `LIKES` (
 	`likePost` int (9) NOT NULL COMMENT 'id del post en el que se hizo like',
 	PRIMARY KEY (`authorLike`,`likePost`),
 	FOREIGN KEY (`authorLike`) REFERENCES USERS(email),
-	FOREIGN KEY (`likePost`) REFERENCES POST(idPost)
+	FOREIGN KEY (`likePost`) REFERENCES POST(idPost) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de likes';	
 
 -- creacion de la tabla COMMENTS
@@ -53,12 +53,12 @@ CREATE TABLE IF NOT EXISTS `COMMENTS` (
 	`dateComment` timestamp COLLATE utf8_spanish_ci NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha y hora en la que es creado el comentario, no puede ser nulo',
 	`content` text COLLATE utf8_spanish_ci NOT NULL COMMENT 'Contenido del post. No puede ser nulo.',	
 	`numLikes` int(4) DEFAULT '0' COMMENT 'Numero de likes que tiene el comentario, 0 por defecto',
-	`author` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'email del usuario que hizo like en el comentario',
+	`author` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'email del usuario que hizo el comentario',
 	`idPost` int (9) NOT NULL COMMENT 'id del post en el que se hizo like',
 	PRIMARY KEY (`idComment`),
-	FOREIGN KEY (`author`) REFERENCES USERS(email),
-	FOREIGN KEY (`idPost`) REFERENCES POST(idPost)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de posts' AUTO_INCREMENT=1;
+	FOREIGN KEY (`author`) REFERENCES `USERS`(`email`),
+	FOREIGN KEY (`idPost`) REFERENCES `POST`(`idPost`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de comentarios' AUTO_INCREMENT=1;
 
 -- insercion de datos de ejemplo
 INSERT INTO `USERS` (`email`, `password`, `name`) VALUES
@@ -98,8 +98,12 @@ INSERT INTO `FRIENDS` (`userEmail`, `friendEmail`, `isFriend`) VALUES
 ('adri@gmail.com','marta@gmail.com',false);
 
 
-
-
+INSERT INTO `COMMENTS` (`idComment`,`dateComment`,`content`,`numLikes`,`author`,`idPost`) VALUES
+(1,'2014-11-10 23:00:00','Comentario de prueba',0,'adri@gmail.com',1),
+(2,'2014-11-10 23:00:00','Comentario de prueba 2',0,'jeni@gmail.com',1),
+(3,'2014-11-10 23:00:00','Comentario de prueba 3',0,'tggomez@gmail.com',1),
+(4,'2014-11-10 23:00:00','Comentario de prueba 4',0,'adri@gmail.com',2),
+(5,'2014-11-10 23:00:00','Comentario de prueba 5',0,'llperez@gmail.com',1);
 
 
 
