@@ -2,8 +2,9 @@
 <?php 
  require_once(__DIR__."/../../core/ViewManager.php");
  $view = ViewManager::getInstance();
- $posts = $view->getVariable("posts");
+ $posts = $view->getVariable("posts"); 
  $errors = $view->getVariable("errors");
+ $newcomment = $view->getVariable("comment"); 
  $view->setVariable("title", "Flaboo -- Inicio");
 ?>
 
@@ -24,8 +25,9 @@
 </div>		
 	
 	<?php if($posts != NULL): ?>
+	
 	<?php foreach ($posts as $post): ?>
-
+	
 	<div class="comentario">
 		<img  class="usercomentario" src="assets/img/userb.jpg" alt="LogOut" height="50" width="50">
 		<div class="conjunto">
@@ -42,6 +44,14 @@
 			<button class="botonmegusta" name="idPost"><?=i18n("Ya no me gusta")?></button>
 		</a>
 		<p class="clearboth"><?=$post->getContent()?></p>
+		<?php foreach($post->getComments() as $comment): ?>
+		<div class="comment">
+			<p><?= $comment->getAuthor()?></p>
+			<p><?= $comment->getDate() ?></p>
+			<p><?= $comment->getNumLikes() ?></p>
+			<p><?= $comment->getContent() ?></p>
+		</div>
+		<?php endforeach; ?>
 	</div>
 	<?php endforeach; ?>
 	<?php else: ?>

@@ -19,7 +19,7 @@ require_once(__DIR__."/../model/Like.php");
 class PostDAO {
 	
 	/**
-	 * Referencia a la conexión PDO
+	 * Referencia a la conexion PDO
 	 * @var PDO
 	 */
 	private $db;
@@ -112,6 +112,82 @@ class PostDAO {
 		if(!empty($array_post)){
 			return $array_post;
 		} else return null;
+	}
+	
+	
+	public function findByAuthorWithComments(User $author) {
+		$stmt = $this->db->prepare("SELECT P.idPost as 'post.id', 
+				P.datePost as 'post.date', 
+				P.content as 'post.content', 
+				P.numLikes as 'post.likes', 
+				P.author as 'post.author', 
+				C.idComment as 'comment.id', 
+				C.dateComment as 'comment.date', 
+				C.content as 'comment.content', 
+				C.numLikes as 'comment.likes', 
+				C.author as 'comment.author', 
+				C.idPost as 'comment.idPost' 
+				FROM post P LEFT OUTER JOIN comments C ON P.idPost = C.idPost 
+				WHERE P.author in 
+					( 
+					SELECT userEmail FROM friends WHERE friendEmail = ? AND isFriend='1' 
+					UNION 
+					SELECT friendEmail FROM friends WHERE userEmail = ? AND isFriend='1' 
+					) 
+				UNION 
+				SELECT P.idPost as 'post.id', 
+				P.datePost as 'post.date', 
+				P.content as 'post.content', 
+				P.numLikes as 'post.likes', 
+				P.author as 'post.author', 
+				C.idComment as 'comment.id', 
+				C.dateComment as 'comment.date', 
+				C.content as 'comment.content', 
+				C.numLikes as 'comment.likes', 
+				C.author as 'comment.author', 
+				C.idPost as 'comment.idPost' 
+				FROM post P LEFT OUTER JOIN comments C ON P.idPost = C.idPost 
+				WHERE P.author = ?");
+		$stmt->execute(array($author->getEmail(),$author->getEmail(),$author->getEmail()));
+		$postsWithComments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		$posts = array();
+		if(sizeof($postsWithComments) > 0){
+			/*$post = new Post($postWithComments[0]["post.id"],
+							$postWithComments[0]["post.date"],
+							$postWithComments[0]["post.content"],
+							$postWithComments[0]["post.likes"],
+							$postWithComments[0]["post.author"]);
+			$comments_array = array();*/
+			foreach ($postsWithComments as $postwithcomments){
+				
+				if (!isset($posts[$postwithcomments["post.id"]])){
+					$posts[$postwithcomments["post.id"]] = new Post($postwithcomments["post.id"],
+							$postwithcomments["post.date"],
+							$postwithcomments["post.content"],
+							$postwithcomments["post.likes"],
+							$postwithcomments["post.author"]);
+					
+				} 
+				$post = $posts[$postwithcomments["post.id"]];
+				if (isset($postwithcomments["comment.id"])){
+					$comment = new Comment($postwithcomments["comment.id"],
+									$postwithcomments["comment.date"],
+									$postwithcomments["comment.content"],
+									$postwithcomments["comment.likes"],
+									$postwithcomments["comment.author"],
+									$postwithcomments["comment.idPost"]);
+					$post->addComment($comment);
+				}
+				
+				
+			}
+			
+			return $posts;
+		}
+		else {
+			return NULL;
+		}
 	}
 }
 ?>

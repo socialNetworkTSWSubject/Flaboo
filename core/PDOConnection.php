@@ -9,7 +9,7 @@
  */
 
 class PDOConnection {
-  private static $dbhost = "localhost";
+  private static $dbhost = "127.0.0.1";
   private static $dbname = "flaboo";
   private static $dbuser = "flaboo";
   private static $dbpass = "flaboo";

@@ -52,6 +52,12 @@ class Post
 	private $likes;
 	
 	/**
+	 * comentarios del post
+	 * @var mixed
+	 */
+	private $comments = array();
+	
+	/**
 	 * Constructor del post
 	 * @param int $idPost El id del post
 	 * @param string $date La fecha y hora de creacion del post
@@ -59,14 +65,16 @@ class Post
 	 * @param int $numLikes El numero de likes del post
 	 * @param string $author El autor del post
 	 * @param mixed $likes Los likes del post
+	 * @param mixed $comments Los comentarios del post
 	 */
-	public function __construct($idPost=NULL, $date=NULL, $content=NULL, $numLikes=NULL, $author=NULL, $likes=NULL){
+	public function __construct($idPost=NULL, $date=NULL, $content=NULL, $numLikes=NULL, $author=NULL, $likes=NULL, $comments=array()){
 		$this->idPost = $idPost;
 		$this->date = $date;
 		$this->content = $content;
 		$this->numLikes = $numLikes;
 		$this->author = $author;
 		$this->likes = $likes;
+		$this->comments = $comments;
 	}
 	
 	/**
@@ -142,12 +150,30 @@ class Post
 	
 	/**
 	 * Enlaza los likes en el post
-	 * @param array $likes
+	 * @param mixed $likes
 	 */
 	public function setLikes(array $likes){
 		$this->likes = $likes;
 	}
 	
+	/**
+	 * Devuelve los comentarios del post
+	 * @return mixed $comments
+	 */
+	 public function getComments(){
+		return $this->comments;
+	 }
+	 
+	 public function addComment($comment) {
+		array_push($this->comments, $comment);
+	 }
+	/**
+	 * Enlaza los comentarios en el post
+	 * @param mixed $comments 
+	 */
+	public function setComments(array $comments){
+		$this->comments = $comments;
+	}
 	
 	/**
 	 * Comprueba si la instancia del post es valida para ser almacenada

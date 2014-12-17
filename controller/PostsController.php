@@ -1,7 +1,10 @@
 <?php
 require_once(__DIR__."/../database/PostDAO.php");
+require_once(__DIR__."/../database/CommentDAO.php");
+require_once(__DIR__."/../database/UserDAO.php");
 require_once(__DIR__."/../model/Post.php");
 require_once(__DIR__."/../model/User.php");
+require_once(__DIR__."/../model/Comment.php");
 require_once(__DIR__."/../core/ViewManager.php");
 require_once(__DIR__."/../core/I18n.php");
 require_once(__DIR__."/../controller/BaseController.php");
@@ -9,7 +12,7 @@ require_once(__DIR__."/../controller/BaseController.php");
  * Class PostController
  * 
  * Controlador relativo a los post cuyas funcionalidades 
- * son mostrar y aÃ±adir nuevos post
+ * son mostrar y añadir nuevos post
  * 
  * @author jenifer <jeny-093@hotmail.com>
  * @author adrian <adricelixfernandez@gmail.com>
@@ -20,12 +23,13 @@ class PostsController extends BaseController {
    * Referencia a la clase PostDAO que interactua con la BD
    * @var PostDAO
    */  
-  private $postDAO; 
+  private $userDAO; 
   
   public function __construct() {    
     parent::__construct();
     
     $this->postDAO = new PostDAO();
+	$this->userDAO = new UserDAO();
   }
   
   /**
@@ -38,9 +42,12 @@ class PostsController extends BaseController {
   	if (!isset($this->currentUser)) {
   		throw new Exception("Not in session. Editing posts requires login");
   	}
-	
+	//print_r($this->loadPosts()); die();
 	//Carga los post en la vista y la renderiza
-  	$this->view->setVariable("posts", $this->loadPost());
+  	$this->view->setVariable("posts", $this->loadPosts());
+	
+	$comment = $this->view->getVariable("comment"); 
+    $this->view->setVariable("comment", ($comment==NULL)?new Comment():$comment);
   	$this->view->render("posts","inicio");
   }
   
@@ -59,11 +66,13 @@ class PostsController extends BaseController {
 		// con esto coge el id del usuario del que se quieren ver los posts
 		$userEmail=$_GET["id"];
 		
+		$user = $this->userDAO->findByEmail($userEmail);
+		
 		$posts = $this->postDAO->findPostsFriend($userEmail);
 		
 		//Carga los post en la vista y la renderiza
 		$this->view->setVariable("posts", $posts);
-		$this->view->setVariable("userEmail", $userEmail);
+		$this->view->setVariable("userName", $user->getName());
 	}
   	$this->view->render("posts","perfilAmigo");
   }
@@ -113,8 +122,8 @@ class PostsController extends BaseController {
    * @throws Exception si no encuentra ningun post
    * @return mixed Array de las instancias Post 
    */ 		
-  private function loadPost(){
-	$posts = $this->postDAO->findByAuthor($this->currentUser);
+  private function loadPosts(){
+	$posts = $this->postDAO->findByAuthorWithComments($this->currentUser);
 	return $posts;
   }
   

@@ -1,0 +1,5 @@
+Visualizar los posts de un amigo, pulsando en el autor(email) que aparece en el post.
+Modificar la contraseña del usuario.
+Ya no me gusta.
+Visualizar el número de solicitudes.
+Eliminar amigo.

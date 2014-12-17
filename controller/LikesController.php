@@ -70,6 +70,9 @@ class LikesController extends BaseController{
 			try {
 				$this->likeDAO->addLikePost($like);
 				$this->likeDAO->increaseNumLikes($idPost);
+				if(isset($_GET["iduser"])){				
+					$this->view->redirect("posts", "perfil", "id=".$_GET["iduser"]);
+				}
 				$this->view->redirect("posts", "viewPosts");
 			} catch (ValidationException $ex){
 				$errors = $ex->getErrors();
@@ -117,6 +120,9 @@ class LikesController extends BaseController{
 				try {
 					$this->likeDAO->removeLikePost($like);
 					$this->likeDAO->decreaseNumLikes($idPost);
+					if(isset($_GET["iduser"])){				
+					$this->view->redirect("posts", "perfil", "id=".$_GET["iduser"]);
+				}
 					$this->view->redirect("posts", "viewPosts");
 				} catch (ValidationException $ex){
 					$errors = $ex->getErrors();
