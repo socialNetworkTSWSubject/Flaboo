@@ -44,6 +44,7 @@
 			<button class="botonmegusta" name="idPost"><?=i18n("Ya no me gusta")?></button>
 		</a>
 		<p class="clearboth"><?=$post->getContent()?></p>
+		
 		<?php foreach($post->getComments() as $comment): ?>
 		<div class="comment">
 			<p><?= $comment->getAuthor()?></p>
@@ -51,13 +52,20 @@
 			<p><?= $comment->getNumLikes() ?></p>
 			<p><?= $comment->getContent() ?></p>
 		</div>
+		
 		<?php endforeach; ?>
+		<div class="addcoment">
+		<form method="POST" action="index.php?controller=comments&action=add&id=<?=$post->getIdPost()?>">
+			  <textarea type="text" name="content" rows="5" cols="70"><?= $newcomment->getContent();?></textarea>
+			  <input id="botonmegusta" type="submit" name="submit" value="<?=i18n("Hacer comentario") ?>">
+		</form>
+		</div>
 	</div>
 	<?php endforeach; ?>
+	
+			
 	<?php else: ?>
 		<h1> <?=i18n("Muro vacio")?></h1>
 	<?php endif;?>
 
-
-	
 	

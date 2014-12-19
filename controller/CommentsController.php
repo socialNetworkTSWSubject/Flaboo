@@ -3,7 +3,7 @@
 require_once (__DIR__ . "/../model/User.php");
 require_once (__DIR__ . "/../model/Post.php");
 require_once (__DIR__ . "/../model/Comment.php");
-require_once (__DIR__ . "/../database/PostDAOphp");
+require_once (__DIR__ . "/../database/PostDAO.php");
 require_once (__DIR__ . "/../database/CommentDAO.php");
 require_once (__DIR__ . "/../controller/BaseController.php");
 
@@ -41,11 +41,11 @@ class CommentsController extends BaseController {
 			throw new Exception ( "Not in session. Adding comments requires login" );
 		}
 		
-		if (isset ( $_POST ["id"] )) { // reaching via HTTP Post...
-		                           
+		if (isset ( $_GET ["id"] )) { // reaching via HTTP Post...
+		                       
 			// Se obtiene el post de la BD
-			$idPost = $_POST ["id"];
-			$post = $this->postDAO->findById ( $idPost );
+			$idPost = $_GET ["id"];
+			$post = $this->postDAO->findByIdPost ( $idPost );
 			
 			// Si no existe el post lanza una excepcion
 			if ($post == NULL) {
@@ -56,8 +56,8 @@ class CommentsController extends BaseController {
 			$comment = new Comment ();
 			$comment->setDate ( date ( "Y-m-d H:i:s" ) );
 			$comment->setContent ( $_POST ["content"] );
-			$comment->setAuthor ( $this->currentUser );
-			$comment->setPost ( $post );
+			$comment->setAuthor ( $this->currentUser->getEmail() );
+			$comment->setIdPost ( $post->getIdPost() );
 			
 			try {
 				// Valida el comentario, si falla lanza una excepcion
@@ -67,14 +67,14 @@ class CommentsController extends BaseController {
 				$this->commentDAO->save ( $comment );
 				
 				// Redirige al post
-				$this->view->redirect ( "posts", "viewPosts", "id=" . $post->getId () );
+				$this->view->redirect ( "posts", "viewPosts", "id=" . $post->getIdPost () );
 			} catch ( ValidationException $ex ) {
 				$errors = $ex->getErrors ();
 				
 				$this->view->setVariable ( "comment", $comment, true );
 				$this->view->setVariable ( "errors", $errors, true );
 				
-				$this->view->redirect ( "posts", "viewPosts", "id=" . $post->getId () );
+				$this->view->redirect ( "posts", "viewPosts", "id=" . $post->getIdPost () );
 			}
 		} else {
 			throw new Exception ( "No such post id" );

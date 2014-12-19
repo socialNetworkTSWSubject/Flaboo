@@ -32,7 +32,7 @@ class CommentDAO {
 	 * @return void
 	 */
 	public function save(Comment $comment) {
-		$stmt = $this->db->prepare ( "INSERT INTO comment(`dateComment`,`content`,`numLikes`,`author`,`idPost`) values(?,?,?,?,?)" );
+		$stmt = $this->db->prepare ( "INSERT INTO comments(`dateComment`,`content`,`numLikes`,`author`,`idPost`) values(?,?,?,?,?)" );
 		$stmt->execute ( array (
 				$comment->getDate (),
 				$comment->getContent (),

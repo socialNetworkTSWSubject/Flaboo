@@ -171,7 +171,7 @@ class Comment {
 	 *        	the author of this comment
 	 * @return void
 	 */
-	public function setAuthor(User $author) {
+	public function setAuthor($author) {
 		$this->author = $author;
 	}
 	
@@ -180,7 +180,7 @@ class Comment {
 	 *
 	 * @return Post The parent post of this comment
 	 */
-	public function getPost() {
+	public function getIdPost() {
 		return $this->post;
 	}
 	/**
@@ -190,7 +190,7 @@ class Comment {
 	 *        	the parent post
 	 * @return void
 	 */
-	public function setPost(Post $post) {
+	public function setIdPost($post) {
 		$this->post = $post;
 	}
 	

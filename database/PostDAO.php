@@ -58,39 +58,6 @@ class PostDAO {
 	}
 	
 	/**
-	 * Carga todos los post cuyo autor es el usuario actual o sus amigos
-	 * @param string $idAuthor
-	 * @throws PDOException si ocurre algun error en la BD
-	 * @return Post Las instancias de post|NULL en caso de no existir post
-	 */
-	public function findByAuthor(User $author){
-		$stmt = $this->db->prepare("SELECT * FROM post where author in 
-		( 
-			SELECT userEmail from friends where friendEmail = ? and isFriend='1' 
-			UNION 
-			SELECT friendEmail from friends where userEmail = ? and isFriend='1' 
-		)
-		UNION SELECT * from post where author = ? 
-		order by datePost DESC");
-		$stmt->execute(array($author->getEmail(),$author->getEmail(),$author->getEmail()));
-		$postFriends =$stmt->fetchAll(PDO::FETCH_ASSOC);
-		
-		
-		$array_post = array();
-		if(sizeof($postFriends)>0){
-			foreach($postFriends as $postFriend) {
-				array_push($array_post, new Post($postFriend["idPost"], $postFriend["datePost"], $postFriend["content"],
-					$postFriend["numLikes"], $postFriend["author"]));
-			}
-		}
-		
-		if(!empty($array_post)){
-			return $array_post;
-		} else return null;
-	}
-	
-	
-	/**
 	 * Carga todos los post cuyo autor es el amigo del usuario
 	 * @param string $idAuthor
 	 * @throws PDOException si ocurre algun error en la BD
@@ -147,18 +114,13 @@ class PostDAO {
 				C.author as 'comment.author', 
 				C.idPost as 'comment.idPost' 
 				FROM post P LEFT OUTER JOIN comments C ON P.idPost = C.idPost 
-				WHERE P.author = ?");
+				WHERE P.author = ? 
+				ORDER BY `post.date` DESC, `comment.date` DESC");
 		$stmt->execute(array($author->getEmail(),$author->getEmail(),$author->getEmail()));
 		$postsWithComments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		
 		$posts = array();
 		if(sizeof($postsWithComments) > 0){
-			/*$post = new Post($postWithComments[0]["post.id"],
-							$postWithComments[0]["post.date"],
-							$postWithComments[0]["post.content"],
-							$postWithComments[0]["post.likes"],
-							$postWithComments[0]["post.author"]);
-			$comments_array = array();*/
 			foreach ($postsWithComments as $postwithcomments){
 				
 				if (!isset($posts[$postwithcomments["post.id"]])){
@@ -167,7 +129,6 @@ class PostDAO {
 							$postwithcomments["post.content"],
 							$postwithcomments["post.likes"],
 							$postwithcomments["post.author"]);
-					
 				} 
 				$post = $posts[$postwithcomments["post.id"]];
 				if (isset($postwithcomments["comment.id"])){
@@ -179,10 +140,7 @@ class PostDAO {
 									$postwithcomments["comment.idPost"]);
 					$post->addComment($comment);
 				}
-				
-				
 			}
-			
 			return $posts;
 		}
 		else {
