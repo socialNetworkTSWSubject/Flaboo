@@ -63,7 +63,7 @@
 		<?php endforeach; ?>
 		<div class="addcoment">
 		<form method="POST" action="index.php?controller=comments&action=add&id=<?=$post->getIdPost()?>">
-			  <textarea type="text" name="content" rows="5" cols="70"><?= $newcomment->getContent();?></textarea>
+			  <textarea type="text" name="content" rows="5" cols="70"></textarea>
 			  <input class="botonmegusta" type="submit" name="submit" value="<?=i18n("Hacer comentario") ?>">
 		</form>
 		</div>

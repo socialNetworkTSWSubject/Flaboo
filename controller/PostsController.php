@@ -112,7 +112,7 @@ class PostsController extends BaseController {
 	}
   	
 	//Carga los post en la vista y la renderiza
-    $this->view->setVariable("posts", $this->loadPost());
+    $this->view->setVariable("posts", $this->loadPosts());
     $this->view->render("posts", "inicio");	
   }
   

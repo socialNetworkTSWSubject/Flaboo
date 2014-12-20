@@ -290,7 +290,7 @@ footer{
     font-size: 20px;
 	margin-top:7px;
 	margin-bottom:40px;
-	margin-left:465px;
+	margin-left:440px;
     font-weight: bold;
 	box-shadow: 0px 0px 8px #000000;
 	border-radius:8px;
@@ -304,8 +304,9 @@ footer{
     padding-left: 8px;
 	padding-right: 8px;
 	padding-top: 5px;
-	margin-top: 50px;
 	padding-bottom: 5px;
+	margin-top: 50px;
+	margin-left: -5px;
     font-size: 15px;
     font-weight: bold;
 	border: 1px solid gray;

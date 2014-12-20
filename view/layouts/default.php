@@ -34,24 +34,10 @@
 			<img id="fotouser" src="assets/img/usera.jpg" alt="LogOut" height="190" width="150">
 		</div>
 		<div id="asidenombre">
-			<center><a href="index.php?controller=users&action=modificarContrasena"><input type="submit" value="<?= i18n("Modificar contraseña")?>"></a></center>
+			<center><a href="index.php?controller=users&action=modificarContrasena"><input class="botongris" type="submit" value="<?= i18n("Modificar contraseña")?>"></a></center>
 			<p><?=$currentuser->getEmail()?></p>
 			<p><?=$currentuser->getName()?></p>
 		</div>
-		<!--
-		<div id="asidedatos">
-			<p id="datosinteres">Datos de interés</p>
-			<ul>
-				<li>Chico</li>
-				<li>Fecha de nacimiento: 01/12/88</li>
-				<li>Vive en: Ourense</li>
-				<li>Registrado: 28/09/2014</li>
-				<li>Estudia: Grado en Ingeniería Informática</li>
-				<li>Trabaja en: No trabaja</li>
-				<li>Información adicional: No hay información adicional que mostrar</li>
-			</ul>
-		</div>
-		-->
 	</aside>
 	
 	
@@ -63,13 +49,6 @@
 	
 	<div id="menuderecha">
 		<ul>
-			<!--
-			<li>
-				<div>
-					<a href="#"><img src="assets/img/mensajes.png" alt="Mensajes" height="60" width="70"></a>
-				</div>
-				<div class="letraderech">Mensajes</div>
-			</li>-->
 			<li>
 				<div>
 					<a href="index.php?controller=friends&action=amigos"><img src="assets/img/amigos.png" alt="Amigos" height="60" width="60"></a>
