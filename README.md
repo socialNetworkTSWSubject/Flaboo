@@ -18,4 +18,4 @@
 <li>Indicar que alg&uacute;n post que se est&aacute; viendo en el muro "me gusta".</li>
 </ul>
 <h2>TODO<h2>
-<p><Da error al crear un post vacio/p>
+<p>Da error al crear un post vacio</p>
