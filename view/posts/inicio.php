@@ -47,17 +47,24 @@
 		
 		<?php foreach($post->getComments() as $comment): ?>
 		<div class="comment">
-			<p><?= $comment->getAuthor()?></p>
-			<p><?= $comment->getDate() ?></p>
-			<p><?= $comment->getNumLikes() ?></p>
-			<p><?= $comment->getContent() ?></p>
+		<img  class="usercomentario" src="assets/img/userb.jpg" alt="LogOut" height="50" width="50">
+			<h2 class="nombrecomentario"><?= $comment->getAuthor()?></h2>
+			<h2 class="nombrecomentario"><?= $comment->getDate() ?></h2>
+			<a href="index.php?controller=likesComments&action=addLike&id=<?=$comment->getId()?>">
+				<button class="botonmegusta" name="idComment"><?=i18n("Me gusta")?></button>
+			</a>
+			<h3 class="likes"><?=$comment->getNumLikes()?></h3>
+			<a href="index.php?controller=likesComments&action=removeLike&id=<?=$comment->getId()?>">
+				<button class="botonmegusta" name="idComment"><?=i18n("Ya no me gusta")?></button>
+			</a>
+			<p class="clearboth"><?= $comment->getContent() ?></p>
 		</div>
 		
 		<?php endforeach; ?>
 		<div class="addcoment">
 		<form method="POST" action="index.php?controller=comments&action=add&id=<?=$post->getIdPost()?>">
 			  <textarea type="text" name="content" rows="5" cols="70"><?= $newcomment->getContent();?></textarea>
-			  <input id="botonmegusta" type="submit" name="submit" value="<?=i18n("Hacer comentario") ?>">
+			  <input class="botonmegusta" type="submit" name="submit" value="<?=i18n("Hacer comentario") ?>">
 		</form>
 		</div>
 	</div>

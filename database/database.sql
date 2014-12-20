@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `FRIENDS` (
 	FOREIGN KEY (`friendEmail`) REFERENCES USERS(email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de amigos';
 
--- creacion de la tabla LIKES
+-- creacion de la tabla LIKES de posts
 CREATE TABLE IF NOT EXISTS `LIKES` (
 	`authorLike` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'email del usuario que hizo like en el post', 
 	`likePost` int (9) NOT NULL COMMENT 'id del post en el que se hizo like',
@@ -59,6 +59,15 @@ CREATE TABLE IF NOT EXISTS `COMMENTS` (
 	FOREIGN KEY (`author`) REFERENCES `USERS`(`email`),
 	FOREIGN KEY (`idPost`) REFERENCES `POST`(`idPost`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de comentarios' AUTO_INCREMENT=1;
+
+-- creacion de la tabla LIKES de comentarios
+CREATE TABLE IF NOT EXISTS `LIKESCOMMENTS` (
+	`authorLike` varchar(40) COLLATE utf8_spanish_ci NOT NULL COMMENT 'email del usuario que hizo like en el post', 
+	`likeComment` int (9) NOT NULL COMMENT 'id del comentario en el que se hizo like',
+	PRIMARY KEY (`authorLike`,`likeComment`),
+	FOREIGN KEY (`authorLike`) REFERENCES USERS(email),
+	FOREIGN KEY (`likeComment`) REFERENCES COMMENTS(idComment) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla para almacenamiento de likes';	
 
 -- insercion de datos de ejemplo
 INSERT INTO `USERS` (`email`, `password`, `name`) VALUES
@@ -99,12 +108,11 @@ INSERT INTO `FRIENDS` (`userEmail`, `friendEmail`, `isFriend`) VALUES
 
 
 INSERT INTO `COMMENTS` (`idComment`,`dateComment`,`content`,`numLikes`,`author`,`idPost`) VALUES
-(1,'2014-11-10 23:00:00','Comentario de prueba',0,'adri@gmail.com',1),
-(2,'2014-11-10 23:00:00','Comentario de prueba 2',0,'jeni@gmail.com',1),
-(3,'2014-11-10 23:00:00','Comentario de prueba 3',0,'tggomez@gmail.com',1),
-(4,'2014-11-10 23:00:00','Comentario de prueba 4',0,'adri@gmail.com',2),
-(5,'2014-11-10 23:00:00','Comentario de prueba 5',0,'llperez@gmail.com',1);
-
+(1,'2014-11-10 23:00:00','Comentario de prueba',1,'adri@gmail.com',1),
+(2,'2014-11-10 23:00:00','Comentario de prueba 2',3,'jeni@gmail.com',1),
+(3,'2014-11-10 23:00:00','Comentario de prueba 3',5,'tggomez@gmail.com',1),
+(4,'2014-11-10 23:00:00','Comentario de prueba 4',7,'adri@gmail.com',2),
+(5,'2014-11-10 23:00:00','Comentario de prueba 5',9,'llperez@gmail.com',1);
 
 
 

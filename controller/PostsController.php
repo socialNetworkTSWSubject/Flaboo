@@ -93,22 +93,23 @@ class PostsController extends BaseController {
   		$post->setContent($_POST["content"]);
   		$post->setDate(date("Y-m-d H:i:s"));
   		$post->setAuthor($this->currentUser->getEmail());
-  	}
   	
-  	try {
-  		//Valida el objeto Post
-  		$post->checkIsValidForCreate();
-  		
-  		//Guarda el post en la base de datos
-  		$this->postDAO->save($post);
-		
-		//Redirecciona a la accion viewPost del controlador Post
-  		$this->view->redirect("posts", "viewPosts");
+  	
+		try {
+			//Valida el objeto Post
+			$post->checkIsValidForCreate();
+			
+			//Guarda el post en la base de datos
+			$this->postDAO->save($post);
+			
+			//Redirecciona a la accion viewPost del controlador Post
+			$this->view->redirect("posts", "viewPosts");
 
-  	} catch(ValidationException $ex){
-  		$errors = $ex->getErrors();
-  		$this->view->setVariable("errors", $errors);
-    }
+		} catch(ValidationException $ex){
+			$errors = $ex->getErrors();
+			$this->view->setVariable("errors", $errors);
+		}
+	}
   	
 	//Carga los post en la vista y la renderiza
     $this->view->setVariable("posts", $this->loadPost());

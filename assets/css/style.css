@@ -53,7 +53,7 @@ h3 {
 }
 
 textarea {
-	width: 540px;
+	width: 505px;
 	height: 95px;
 	margin-left: 15px;
 	border-radius:8px;
@@ -91,8 +91,6 @@ footer{
 	background: -o-linear-gradient(left, rgba(31,31,31,1) 0%, rgba(71,71,71,1) 9%, rgba(102,102,102,1) 24%, rgba(214,214,214,1) 52%, rgba(41,41,41,1) 100%);
 	background: -ms-linear-gradient(left, rgba(31,31,31,1) 0%, rgba(71,71,71,1) 9%, rgba(102,102,102,1) 24%, rgba(214,214,214,1) 52%, rgba(41,41,41,1) 100%);
 	background: linear-gradient(to right, rgba(31,31,31,1) 0%, rgba(71,71,71,1) 9%, rgba(102,102,102,1) 24%, rgba(214,214,214,1) 52%, rgba(41,41,41,1) 100%);
-	/*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f1f1f', endColorstr='#292929', GradientType=1 );*/
-	
 }
 
 .letraderech {
@@ -648,4 +646,14 @@ ul#credentials li {
 	border: 1px solid black;
 	text-align:center;
 	box-shadow: 0px 0px 10px #000000;
+}
+
+.comment {
+	border: 1px solid black;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	background-color: #F5F5F5;
+	border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 2px 5px 5px;
+	-webkit-border-radius: 5px 5px 5px 5px;
 }

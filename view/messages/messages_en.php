@@ -30,6 +30,8 @@
 	"Nuevo Post:" => "New Post:",
 	"Me gusta" => "Like",
 	"Enviar" => "Submit",
-	"Muro vacio" => "Empty wall"
+	"Muro vacio" => "Empty wall",
+	"Ya no me gusta" => "Dislike",
+	"Hacer comentario" => "Do comment"
   )
 ?>
