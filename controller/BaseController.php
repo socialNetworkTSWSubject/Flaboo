@@ -8,7 +8,7 @@ require_once(__DIR__."/../core/I18n.php");
 /**
  * Class BaseController
  *
- * Clase que implementa un Super Constructor básico del que heredan
+ * Clase que implementa un Super Constructor basico del que heredan
  * todos los constructores de la aplicacion
  * 
  * @author jenifer <jeny-093@hotmail.com>
@@ -16,7 +16,7 @@ require_once(__DIR__."/../core/I18n.php");
  */
 class BaseController {
   /**
-   *Instancia de ViewManager
+   * Instancia de ViewManager
    * @var ViewManager
    */
   protected $view;

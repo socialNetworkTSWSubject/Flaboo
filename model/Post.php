@@ -194,11 +194,6 @@ class Post
 		if(sizeof($errors) > 0){
 			throw new ValidationException($errors, "post is not valid");
 		}
-	}
-	
-	
-	
-	
+	}	
 }
-
 ?>

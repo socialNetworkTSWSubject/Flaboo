@@ -11,7 +11,7 @@ require_once(__DIR__."/../core/PDOConnection.php");
  */
 class UserDAO {
   /**
-   * Referencia a la conexión PDO
+   * Referencia a la conexion PDO
    * @var PDO
    */
   private $db;
@@ -74,7 +74,7 @@ class UserDAO {
   }
   
   /**
-   * Comprueba si el email y la contraseña
+   * Comprueba si el email y la password
    * son validos para hacer login
    * 
    * @param String $email El email del usuario
@@ -92,7 +92,7 @@ class UserDAO {
   }
   
   /**
-   * Actualiza la contraseña del usuario
+   * Actualiza la password del usuario
    * 
    * @param String $user El usuario
    * @throws PDOException si ocurre algun error en la BD	 

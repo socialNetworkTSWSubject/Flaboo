@@ -58,7 +58,7 @@ class PostDAO {
 	}
 	
 	/**
-	 * Carga todos los post cuyo autor es el amigo del usuario
+	 * Carga todos los post cuyo autor es un amigo del usuario
 	 * @param string $idAuthor
 	 * @throws PDOException si ocurre algun error en la BD
 	 * @return Post Las instancias de post|NULL en caso de no existir post
@@ -81,7 +81,12 @@ class PostDAO {
 		} else return null;
 	}
 	
-	
+	/**
+	 * Carga todos los post con los comentarios cuyo autor es el usuario o 
+	 * un amigo del usuario.
+	 * @param User $author
+	 * @return Post Las instancias de post con los comentarios|NULL en caso de no encontrar ningun post 
+	 */
 	public function findByAuthorWithComments(User $author) {
 		$stmt = $this->db->prepare("SELECT P.idPost as 'post.id', 
 				P.datePost as 'post.date', 
@@ -148,7 +153,3 @@ class PostDAO {
 		}
 	}
 }
-?>
-	
-
-

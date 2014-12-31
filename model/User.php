@@ -15,7 +15,7 @@ class User {
    */
   private $email;
   /**
-   * La contraseña del usuario
+   * La password del usuario
    * @var string
    */
   private $password;
@@ -29,7 +29,7 @@ class User {
    * El constructor
    * 
    * @param string $email El email del usuario
-   * @param string $password La contraseña del usuario
+   * @param string $password La password del usuario
    * @param string $name El nombre del usuario
    */
   public function __construct($email=NULL, $password=NULL, $name=NULL) {
@@ -56,17 +56,17 @@ class User {
   }
   
   /**
-   * Devuelve la contraseña de ese usuario
+   * Devuelve la password de ese usuario
    * 
-   * @return string la contraseña de ese usuario
+   * @return string la password de ese usuario
    */  
   public function getPassword() {
     return $this->password;
   }  
   /**
-   * Modifica la contraseña de ese usuario
+   * Modifica la password de ese usuario
    * 
-   * @param string $password la contraseña de ese usuario
+   * @param string $password la password de ese usuario
    * @return void
    */    
   public function setPassword($password) {
@@ -110,7 +110,7 @@ class User {
 		$errors["name"] = "El nombre debe tener por lo menos 5 caracteres";	
       }
 	  if($this->password != $repeat_password) {
-		$errors["repeat_password"] = "Las contraseñas no son iguales";	
+		$errors["repeat_password"] = "Las passwords no son iguales";	
 	  }
       if (sizeof($errors)>0){
 		throw new ValidationException($errors, "El usuario no es valido");
@@ -129,10 +129,10 @@ class User {
   public function checkIsValidForUpdate($password2) {
       $errors = array();
       if (strlen($this->password) < 4) {
-		$errors["password"] = "La contraseña debe tener por lo menos 4 caracteres";	
+		$errors["password"] = "La password debe tener por lo menos 4 caracteres";	
       }
 	  if($this->password != $password2) {
-		$errors["password2"] = "Las contraseñas no son iguales";	
+		$errors["password2"] = "Las password no son iguales";	
 	  }
       if (sizeof($errors)>0){
 		throw new ValidationException($errors, "El usuario no es valido");
