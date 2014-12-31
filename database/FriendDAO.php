@@ -208,7 +208,13 @@ class FriendDAO {
      
   }
   
-  
+  /**
+   * Devuelve el numero de solicitudes de amistad que tiene el currentuser
+   * 
+   * @param User $currentuserEmail El email del usuario actual
+   * @throws PDOException si ocurre algun error en la BD
+   * @return int numero de solicitudes
+   */ 
   public function getNumSolicitudes($currentuserEmail){
 	$stmt = $this->db->prepare("SELECT count(*) FROM friends WHERE friends.friendEmail=? and friends.isFriend='0' ");
     $stmt->execute(array($currentuserEmail));
