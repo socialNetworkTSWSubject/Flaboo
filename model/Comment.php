@@ -73,12 +73,6 @@ class Comment {
 	 *        	El autor del comentario
 	 * @param Post $post
 	 *        	El post relativo al comentario
-	 * @param int $numLikes
-	 * 			El numero de likes del post
-	 * @param User $author
-	 * 			El autor del post
-	 * @param Like $likes
-	 * 			El numero de likes del post
 	 */
 	public function __construct($id = NULL, $date = NULL, $content = NULL, $numLikes = NULL, $author = NULL, $post = NULL, $likes=NULL) {
 		$this->id = $id;

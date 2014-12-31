@@ -76,5 +76,7 @@ class LikeDAO {
 	public function decreaseNumLikes($idPost){
 		$stmt = $this->db->prepare("UPDATE post SET numLikes = numLikes-1 WHERE idPost = ?");
 		$stmt->execute(array($idPost));
-	}	
+	}
+	
 }
+?>

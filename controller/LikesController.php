@@ -9,7 +9,7 @@ require_once(__DIR__."/../controller/BaseController.php");
 /**
  * Class LikesController
  * Controlador relativo a los likes de un post cuya funcionalidad es 
- * insertar un like en un post
+ * añadir un like
  * 
  * @author jenifer <jeny-093@hotmail.com>
  * @author adrian <adricelixfernandez@gmail.com>
@@ -37,7 +37,7 @@ class LikesController extends BaseController{
 	}
 	
 	/**
-	 * Metodo del controlador Likes cuya funcionalidad es insertar un like en un
+	 * Metodo del controlador Likes cuya funcionalidad es añadir un like en un
 	 * post. Verifica que el usuario haya iniciado sesion, que el post existe y
 	 * que el usuario no ha hecho like previamente sobre ese post.
 	 *
@@ -142,3 +142,4 @@ class LikesController extends BaseController{
 	}
 	
 }
+?>

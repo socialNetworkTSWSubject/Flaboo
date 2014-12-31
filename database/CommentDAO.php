@@ -14,7 +14,7 @@ require_once (__DIR__ . "/../model/Comment.php");
 class CommentDAO {
 	
 	/**
-	 * Referencia a la conexion PDO
+	 * Referencia a la conexión PDO
 	 * 
 	 * @var PDO
 	 */
@@ -37,12 +37,6 @@ class CommentDAO {
 	}
 	
 	
-	/**
-	 * Carga un comentario segun su ID
-	 * 
-	 * @param string $idComment
-	 * @return Comment si se encontro el comentario | NULL en caso contrario
-	 */
 	public function findByIdComment($idComment){
 		$stmt = $this->db->prepare("SELECT * FROM comments WHERE idComment = ?");
 		$stmt->execute (array($idComment));
@@ -54,3 +48,4 @@ class CommentDAO {
 		} else return NULL;	
 	}
 }
+?>
