@@ -1,0 +1,6 @@
+La lista de ampliaciones es la siguiente:
+-Indicar el número de solicitudes pendientes que tiene el usuario.
+-Ver el perfil de un amigo pulsando el el nombre de alguno de los posts del muro (el perfil solo indica el nombre del amigo y sus posts).
+-Cancelar/eliminar amistades.
+-Modificar contraseña.
+-Ya no me gusta.
